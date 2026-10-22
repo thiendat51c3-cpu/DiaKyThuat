@@ -4,84 +4,181 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>Xử lý nền đất yếu - Sổ tay nghiên cứu</title>
+<meta name="theme-color" content="#0d2744">
+<title>Xử lý nền đất yếu - Sổ tay kỹ thuật</title>
 <style>
 :root{
-  --bg:#f5f6f8; --card:#ffffff; --text:#1c2430; --muted:#5b6675; --line:#dde2ea;
-  --accent:#0b6e99; --accent-soft:#e3f1f7; --ok:#1f8a4c; --warn:#b8610a; --warn-soft:#fff3e2;
-  --formula:#f0f4ff; --shadow:0 1px 3px rgba(20,30,50,.08);
+  --bg:#eef1f5; --surface:#ffffff; --surface2:#f5f7fa; --ink:#142033; --muted:#5a6779; --line:#d8dfe8;
+  --navy:#0d2744; --navy2:#154070; --accent:#0b78a0; --accent-soft:#e1f0f6;
+  --amber:#a86400; --amber-soft:#fff4de; --red:#b3392b; --red-soft:#fdeceb; --ok:#1a8a4a;
+  --formula:#edf2fa; --soil:#dccdac; --soft:#c7b898; --sand:#efe0ae; --water:#a3cde8; --fillc:#c4cad1; --conc:#aab1b9;
+  --shadow:0 1px 2px rgba(15,30,55,.07),0 4px 14px rgba(15,30,55,.05);
+  --m1:#0b78a0; --m2:#2c7d50; --m3:#8c6a1c; --m4:#6a4ea3; --m5:#0b8590; --m6:#b0452d; --m7:#4a5a72;
 }
 @media (prefers-color-scheme: dark){
-  :root{ --bg:#0f141b; --card:#18202b; --text:#e6ebf2; --muted:#9aa7b8; --line:#2a3544;
-  --accent:#4fb4de; --accent-soft:#16303d; --ok:#4cc882; --warn:#f0a050; --warn-soft:#33260f; --formula:#1b2740; --shadow:none;}
+  :root{
+    --bg:#0b121b; --surface:#141e2a; --surface2:#1a2634; --ink:#e5ebf3; --muted:#97a5b7; --line:#273548;
+    --navy:#0a1d33; --navy2:#123a62; --accent:#4cb3dc; --accent-soft:#14303d;
+    --amber:#f0a748; --amber-soft:#33260f; --red:#f08a7c; --red-soft:#351b18; --ok:#4cc882;
+    --formula:#16233a; --soil:#5b4e38; --soft:#4a3f2d; --sand:#7a6c40; --water:#2c5a78; --fillc:#4a525c; --conc:#5d656f;
+    --shadow:none;
+    --m1:#4cb3dc; --m2:#5fcf8b; --m3:#d7b25a; --m4:#a58ae0; --m5:#4fd0d8; --m6:#f0937c; --m7:#9fb0c8;
+  }
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-header.top{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top));display:flex;align-items:center;gap:10px}
-header.top h1{font-size:17px;margin:0;flex:1;line-height:1.3}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
 button{font:inherit;cursor:pointer}
-.btn{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px}
-.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
-.btn.small{padding:5px 10px;font-size:14px}
-#menuBtn{display:none;background:var(--accent-soft);color:var(--accent);border:0;border-radius:8px;padding:8px 12px;font-size:18px}
-.layout{display:flex;max-width:1200px;margin:0 auto}
-nav#side{width:310px;flex:0 0 310px;padding:14px;position:sticky;top:57px;align-self:flex-start;max-height:calc(100vh - 57px);overflow:auto}
-main{flex:1;min-width:0;padding:14px 18px 80px}
-.search{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit;margin-bottom:10px}
-.prog{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:14px}
-.bar{height:8px;background:var(--line);border-radius:5px;overflow:hidden;margin-top:6px}
-.bar>i{display:block;height:100%;background:var(--ok);width:0}
-.mod{margin-bottom:8px}
-.mod>button.mh{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 11px;color:var(--text);font-weight:600;font-size:14.5px;display:flex;gap:8px;justify-content:space-between}
-.mod .count{color:var(--muted);font-weight:400;font-size:13px;white-space:nowrap}
-.mod ul{list-style:none;margin:4px 0 0;padding:0 0 0 6px;display:none}
+/* ---------- thanh trên ---------- */
+header.top{position:sticky;top:0;z-index:20;background:linear-gradient(90deg,var(--navy),var(--navy2));color:#fff;padding:9px 16px;padding-top:calc(9px + env(safe-area-inset-top));display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+header.top .logo{flex:0 0 34px;height:34px}
+header.top .brand{flex:1;min-width:0;line-height:1.25}
+header.top .brand b{display:block;font-size:16px;letter-spacing:.2px}
+header.top .brand span{display:block;font-size:12px;opacity:.78;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hbtn{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:8px;padding:6px 12px;font-size:14px}
+.hbtn:hover{background:rgba(255,255,255,.24)}
+#menuBtn{display:none;font-size:18px;padding:5px 11px}
+/* ---------- bố cục ---------- */
+.layout{display:flex;max-width:1240px;margin:0 auto}
+nav#side{width:320px;flex:0 0 320px;padding:14px;position:sticky;top:53px;align-self:flex-start;max-height:calc(100vh - 53px);overflow:auto}
+main{flex:1;min-width:0;padding:16px 20px 90px}
+.search{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:15px;margin-bottom:10px}
+.prog{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:13.5px;color:var(--muted)}
+.bar{height:7px;background:var(--line);border-radius:5px;overflow:hidden;margin-top:6px}
+.bar>i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+.mod{margin-bottom:7px}
+.mod>button.mh{width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:8px 10px;color:var(--ink);font-weight:600;font-size:14px;line-height:1.35;display:flex;gap:9px;align-items:center}
+.mod>button.mh .no{flex:0 0 26px;height:26px;border-radius:7px;background:var(--mc);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center}
+.mod>button.mh .tt{flex:1}
+.mod .count{color:var(--muted);font-weight:400;font-size:12.5px;white-space:nowrap}
+.mod ul{list-style:none;margin:3px 0 0;padding:0 0 0 8px;display:none;border-left:2px solid var(--mc);margin-left:13px}
 .mod.open ul{display:block}
-.mod li a{display:flex;gap:7px;align-items:flex-start;padding:6px 8px;border-radius:6px;color:var(--text);text-decoration:none;font-size:14px;line-height:1.4;cursor:pointer}
+.mod li a{display:flex;gap:8px;align-items:flex-start;padding:6px 8px;border-radius:6px;color:var(--ink);font-size:13.8px;line-height:1.4;cursor:pointer}
 .mod li a:hover{background:var(--accent-soft)}
 .mod li a.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
 .mod li a .dot{flex:0 0 14px;height:14px;border:2px solid var(--line);border-radius:50%;margin-top:3px}
 .mod li a.done .dot{background:var(--ok);border-color:var(--ok)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow)}
-.card h2{margin:0 0 8px;font-size:20px;line-height:1.3}
-.card h3{margin:0 0 8px;font-size:16px;color:var(--accent)}
-.tag{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:20px;padding:2px 10px;font-size:13px;margin-bottom:8px}
-.formula{background:var(--formula);border-left:4px solid var(--accent);border-radius:8px;padding:10px 12px;margin:8px 0}
+/* ---------- trang chủ ---------- */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;border-radius:14px;padding:26px 24px;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.hero:after{content:"";position:absolute;right:-40px;top:-40px;width:220px;height:220px;border-radius:50%;border:30px solid rgba(255,255,255,.06)}
+.hero h2{margin:0 0 6px;font-size:27px;line-height:1.25}
+.hero p{margin:0 0 14px;max-width:640px;opacity:.9}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:8px 14px;min-width:96px}
+.stat b{display:block;font-size:22px;line-height:1.2}
+.stat span{font-size:12.5px;opacity:.85}
+.btn{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:600}
+.hero .btn{background:#fff;color:var(--navy)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent);font-weight:500}
+.btn.small{padding:5px 11px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:default}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:16px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--mc);border-radius:12px;padding:14px 16px;cursor:pointer;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.mcard:hover{border-color:var(--mc)}
+.mcard .big{font-size:12.5px;font-weight:700;color:var(--mc);letter-spacing:.6px;text-transform:uppercase}
+.mcard h3{margin:2px 0 6px;font-size:16.5px;line-height:1.35}
+.mcard p{margin:0 0 10px;font-size:14.5px;color:var(--muted);flex:1}
+.mcard .meta{font-size:13px;color:var(--muted)}
+.mcard .bar>i{background:var(--mc)}
+/* ---------- trang bài ---------- */
+.crumb{font-size:13.5px;color:var(--muted);margin-bottom:6px}
+.crumb b{color:var(--mc)}
+.titleblock{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--mc);border-radius:12px;padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow)}
+.titleblock h2{margin:0 0 8px;font-size:23px;line-height:1.3}
+.lead{background:var(--accent-soft);border-radius:8px;padding:9px 12px;margin:0;font-size:16px}
+.lead b{color:var(--accent)}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px 18px 16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.sec>h3{margin:0 0 10px;font-size:15px;letter-spacing:.5px;text-transform:uppercase;color:var(--mc);display:flex;align-items:center;gap:8px}
+.sec>h3:before{content:"";width:9px;height:9px;border-radius:2px;background:var(--mc)}
+.sec h4{margin:12px 0 4px;font-size:16px}
+.sec p{margin:6px 0}
+.formula{background:var(--formula);border:1px solid var(--line);border-left:4px solid var(--mc);border-radius:8px;padding:10px 12px;margin:10px 0}
 .formula .fn{font-weight:600;margin-bottom:2px}
-.formula .fx{font-family:"Cambria Math",Cambria,Georgia,serif;font-size:18px;padding:4px 0;overflow-x:auto}
+.formula .fx{font-family:"Cambria Math","STIX Two Math",Cambria,Georgia,serif;font-size:19px;padding:5px 0 7px;overflow-x:auto;color:var(--ink)}
+.formula .tr{font-size:14.5px}
 table{border-collapse:collapse;width:100%;font-size:15px;margin:6px 0}
 th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
-th{background:var(--accent-soft)}
+th{background:var(--surface2);font-size:14px}
 td.k{white-space:nowrap;font-weight:600}
-.note{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:9px 12px;margin:8px 0;font-size:15px}
-.example{border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin:8px 0}
-ol,ul.plain{margin:6px 0;padding-left:22px}
+.tblwrap{overflow-x:auto}
+.callout{border-radius:8px;padding:9px 12px;margin:8px 0;font-size:15.5px;border-left:4px solid}
+.callout.note{background:var(--amber-soft);border-color:var(--amber)}
+.callout.mist{background:var(--red-soft);border-color:var(--red)}
+.callout .lb{display:block;font-weight:700;font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px}
+.callout.note .lb{color:var(--amber)} .callout.mist .lb{color:var(--red)}
+.example{border:1.5px dashed var(--mc);border-radius:8px;padding:10px 13px;margin:8px 0;background:var(--surface2)}
+.example .eh{font-weight:700;margin-bottom:3px}
+ol.steps{margin:6px 0;padding-left:0;list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding:3px 0 3px 38px;margin:5px 0}
+ol.steps li:before{content:counter(s);position:absolute;left:0;top:3px;width:26px;height:26px;border-radius:50%;background:var(--mc);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+ul.plain{margin:6px 0;padding-left:22px}
 li{margin:3px 0}
-details{border:1px solid var(--line);border-radius:8px;padding:7px 11px;margin:6px 0}
+details{border:1px solid var(--line);border-radius:8px;padding:7px 12px;margin:7px 0;background:var(--surface2)}
 details summary{cursor:pointer;font-weight:600}
-textarea.nt{width:100%;min-height:110px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit;resize:vertical}
+textarea.nt{width:100%;min-height:110px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;resize:vertical}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
 .nav2{display:flex;justify-content:space-between;gap:8px;margin-top:6px}
-.home h2{font-size:22px}
-.modcard{cursor:pointer}
-.modcard:hover{border-color:var(--accent)}
+figure.fig{margin:0 0 10px;padding:6px 6px 2px;border:1px solid var(--line);border-radius:10px;background:var(--surface2)}
+figure.fig figcaption{font-size:13.5px;color:var(--muted);padding:2px 8px 8px;line-height:1.5}
 .small-muted{color:var(--muted);font-size:14px}
-@media (max-width:820px){
+.disc{font-size:14px;color:var(--muted);border-left:3px solid var(--line);padding:2px 10px;margin:0 0 16px}
+/* ---------- sơ đồ SVG ---------- */
+svg.dg{width:100%;height:auto;display:block}
+.dg text{fill:var(--ink);font:12.5px -apple-system,"Segoe UI",Arial,sans-serif}
+.dg .t2{fill:var(--muted);font-size:11.5px}
+.dg .tb{font-weight:700}
+.dg .tw{fill:#fff}
+.dg .ln{stroke:var(--ink);fill:none;stroke-width:1.5}
+.dg .thin{stroke-width:1}
+.dg .dash{stroke-dasharray:5 4}
+.dg .ac{stroke:var(--accent);fill:none;stroke-width:2.4}
+.dg .am{stroke:var(--amber);fill:none;stroke-width:2.4}
+.dg .rd{stroke:var(--red);fill:none;stroke-width:2.2}
+.dg .soil{fill:var(--soil);stroke:var(--ink);stroke-width:1}
+.dg .soft{fill:var(--soft);stroke:var(--ink);stroke-width:1}
+.dg .sand{fill:var(--sand);stroke:var(--ink);stroke-width:1}
+.dg .water{fill:var(--water);stroke:none}
+.dg .fillc{fill:var(--fillc);stroke:var(--ink);stroke-width:1.2}
+.dg .conc{fill:var(--conc);stroke:var(--ink);stroke-width:1.2}
+.dg .camb{fill:var(--amber);fill-opacity:.55;stroke:var(--amber);stroke-width:1.2}
+.dg .cacc{fill:var(--accent);fill-opacity:.4;stroke:var(--accent);stroke-width:1.2}
+.mk{fill:var(--ink)} .mka{fill:var(--accent)} .mkm{fill:var(--amber)} .mkr{fill:var(--red)}
+.dg .hls{paint-order:stroke;stroke:var(--soft);stroke-width:3px;stroke-linejoin:round}
+.dg .hl{paint-order:stroke;stroke:var(--fillc);stroke-width:3px;stroke-linejoin:round}
+@media (max-width:860px){
+  figure.fig{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  svg.dg{min-width:600px}
   #menuBtn{display:block}
-  nav#side{position:fixed;left:0;top:0;bottom:0;z-index:30;width:86%;max-width:340px;max-height:none;background:var(--bg);transform:translateX(-102%);transition:transform .2s;padding-top:calc(14px + env(safe-area-inset-top));box-shadow:2px 0 14px rgba(0,0,0,.3)}
+  nav#side{position:fixed;left:0;top:0;bottom:0;z-index:30;width:88%;max-width:350px;max-height:none;background:var(--bg);transform:translateX(-102%);transition:transform .2s;padding-top:calc(14px + env(safe-area-inset-top));box-shadow:2px 0 16px rgba(0,0,0,.35)}
   nav#side.show{transform:none}
-  #scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:25}
+  #scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:25}
   #scrim.show{display:block}
-  main{padding:12px 12px 80px}
-  .card{padding:14px}
+  main{padding:12px 11px 90px}
+  .sec{padding:13px 13px 14px}
+  .titleblock{padding:14px}
+  .titleblock h2{font-size:20px}
+  .hero{padding:20px 16px}
+  .hero h2{font-size:22px}
+  header.top .brand span{display:none}
+}
+@media print{
+  header.top,nav#side,.nav2,.row,#scrim{display:none!important}
+  body{background:#fff}.sec,.titleblock{box-shadow:none;break-inside:avoid}
 }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk" d="M0,0 L10,5 L0,10z" fill="currentColor"/></marker>
+  <marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mka" d="M0,0 L10,5 L0,10z"/></marker>
+  <marker id="ahm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mkm" d="M0,0 L10,5 L0,10z"/></marker>
+  <marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mkr" d="M0,0 L10,5 L0,10z"/></marker>
+</defs></svg>
 <header class="top">
-  <button id="menuBtn" aria-label="Mở mục lục">☰</button>
-  <h1 id="ttl">Xử lý nền đất yếu - Sổ tay nghiên cứu</h1>
-  <button class="btn ghost small" id="homeBtn">Trang chủ</button>
+  <button id="menuBtn" class="hbtn" aria-label="Mở mục lục">☰</button>
+  <svg class="logo" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="8" fill="rgba(255,255,255,.14)"/><path d="M5 12h24" stroke="#fff" stroke-width="2"/><path d="M5 17c4 0 4 5 8 5s4-5 8-5 4 5 8 5" fill="none" stroke="#7fd0ee" stroke-width="2"/><path d="M9 22v7M17 22v7M25 22v7" stroke="#fff" stroke-width="1.6" stroke-dasharray="2 2"/></svg>
+  <div class="brand"><b>Xử lý nền đất yếu</b><span>Sổ tay kỹ thuật theo khóa học 7 module</span></div>
+  <button class="hbtn" id="homeBtn">Trang chủ</button>
 </header>
 <div id="scrim"></div>
 <div class="layout">
@@ -92,7 +189,6 @@ textarea.nt{width:100%;min-height:110px;padding:10px;border:1px solid var(--line
   </nav>
   <main id="main"></main>
 </div>
-
 <script>
 /* ============ DỮ LIỆU NỘI DUNG ============ */
 const MODULES = [
@@ -534,6 +630,567 @@ const MODULES = [
 }
 ];
 
+
+/* ============ SƠ ĐỒ MINH HỌA (SVG) ============ */
+const SV = (w,h,label,body)=>`<svg class="dg" viewBox="0 0 ${w} ${h}" role="img" aria-label="${label}">${body}</svg>`;
+const AR = (x1,y1,x2,y2,cls="ln",mk="ah")=>`<line class="${cls}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="url(#${mk})"/>`;
+const TX = (x,y,t,c="",a="start")=>`<text x="${x}" y="${y}" class="${c}" text-anchor="${a}">${t}</text>`;
+
+const DIAG = {
+
+/* ---- M1 bài 2: thang độ sệt ---- */
+m1t2:()=>{
+  const names=["Cứng","Nửa cứng","Dẻo cứng","Dẻo mềm","Dẻo chảy","Chảy"];
+  const cols=["#9fd3a8","#b9dca0","#dbe49a","#f1dc8f","#f4b985","#ee9c8c"];
+  const lims=["≤ 0","0,25","0,5","0,75","1"];
+  let b="";
+  names.forEach((n,i)=>{const x=40+i*93.3;
+    b+=`<rect x="${x}" y="70" width="93.3" height="44" fill="${cols[i]}" stroke="#14202e" stroke-width="1"/>`+
+       `<text x="${x+46.6}" y="97" text-anchor="middle" fill="#14202e" class="tb" style="fill:#14202e">${n}</text>`;});
+  lims.forEach((l,i)=>{b+=TX(40+(i+1)*93.3,134,l,"t2","middle")});
+  b+=TX(40,134,"","t2");
+  b+=`<path class="rd" d="M413,60 L413,52 L600,52 L600,60"/>`+TX(506,44,"Nhóm đất yếu (thường gặp)","tb","middle");
+  const xe=40+4*93.3+(0.92-0.75)/0.25*93.3;
+  b+=AR(xe,168,xe,118,"ac","aha")+TX(xe,184,"Ví dụ: I_L = 0,92","tb","middle");
+  b+=TX(40,160,"I_L tăng dần: đất càng mềm","t2");
+  b+=AR(40,150,600,150,"ln thin");
+  return [{cap:"Thang độ sệt I_L của đất dính: từ cứng (I_L ≤ 0) đến chảy (I_L &gt; 1). Mũi tên là ví dụ trong bài (I_L ≈ 0,92, dẻo chảy).",svg:SV(640,200,"Thang độ sệt",b)}];
+},
+
+/* ---- M1 bài 3: đường cong nén e-lg σ' ---- */
+m1t3:()=>{
+  let b=`<line class="ln" x1="70" y1="25" x2="70" y2="230"/><line class="ln" x1="70" y1="230" x2="590" y2="230"/>`+
+  TX(14,20,"e (hệ số rỗng)")+TX(590,264,"lg σ′ (áp lực nén, thang logarit)","","end")+
+  `<path class="ac" d="M70,50 L230,75 L520,200"/>`+
+  `<line class="ln dash thin" x1="230" y1="75" x2="230" y2="230"/>`+
+  `<line class="ln dash thin" x1="300" y1="106" x2="300" y2="230"/><line class="ln dash thin" x1="70" y1="106" x2="300" y2="106"/>`+
+  `<line class="ln dash thin" x1="420" y1="158" x2="420" y2="230"/><line class="ln dash thin" x1="70" y1="158" x2="420" y2="158"/>`+
+  `<circle cx="300" cy="106" r="4" fill="var(--amber)"/><circle cx="420" cy="158" r="4" fill="var(--amber)"/>`+
+  TX(230,246,"σ′p","tb","middle")+TX(300,246,"σ′v0","tb","middle")+TX(420,246,"σ′v0+Δσ","tb","middle")+
+  `<path class="am" d="M58,106 L58,158" marker-start="url(#ahm)" marker-end="url(#ahm)"/>`+TX(52,136,"Δe","tb","end")+
+  TX(100,40,"Đoạn nén lại: độ dốc = Cs","t2")+TX(380,110,"Đoạn nén nguyên thủy:","t2")+TX(380,125,"độ dốc = Cc","t2")+
+  `<path class="am" d="M300,196 L420,196" marker-start="url(#ahm)" marker-end="url(#ahm)"/>`+TX(360,190,"lg(σ′2/σ′1)","t2","middle");
+  return [{cap:"Đường cong nén e – lg σ′ từ thí nghiệm nén cố kết. Từ σ′p trở đi đất bị nén mạnh hơn. Cc = Δe / lg(σ′2/σ′1) là độ dốc của đoạn thẳng nguyên thủy; Δe càng lớn thì lún càng nhiều.",svg:SV(640,275,"Đường cong nén e-lg sigma",b)}];
+},
+
+/* ---- M1 bài 4: đường cong U - Tv ---- */
+m1t4:()=>{
+  const X=t=>60+t/1.4*520, Y=u=>220-u*190;
+  let pts=[];
+  for(let u=0;u<=0.972;u+=0.01){const T=u<0.6?Math.PI/4*u*u:-0.933*Math.log10(1-u)-0.085;pts.push(`${X(T).toFixed(1)},${Y(u).toFixed(1)}`);}
+  let b=`<line class="ln" x1="60" y1="20" x2="60" y2="220"/><line class="ln" x1="60" y1="220" x2="590" y2="220"/>`+
+  `<polyline class="ac" points="${pts.join(" ")}"/>`;
+  [0,0.25,0.5,0.75,1].forEach(u=>{b+=`<line class="ln thin" x1="56" y1="${Y(u)}" x2="60" y2="${Y(u)}"/>`+TX(52,Y(u)+4,Math.round(u*100)+"%","t2","end")});
+  [0,0.2,0.4,0.6,0.8,1.0,1.2,1.4].forEach(t=>{b+=`<line class="ln thin" x1="${X(t)}" y1="220" x2="${X(t)}" y2="224"/>`+TX(X(t),238,String(t).replace(".",","),"t2","middle")});
+  const x9=X(0.848),y9=Y(0.9);
+  b+=`<line class="ln dash thin" x1="60" y1="${y9}" x2="${x9}" y2="${y9}"/><line class="ln dash thin" x1="${x9}" y1="${y9}" x2="${x9}" y2="220"/>`+
+  `<circle cx="${x9}" cy="${y9}" r="4.5" fill="var(--amber)"/>`+TX(x9+8,y9+16,"U = 90% khi T_v ≈ 0,848","tb")+
+  TX(14,16,"U (độ cố kết)")+TX(590,258,"T_v (nhân tố thời gian)","","end");
+  return [{cap:"Quan hệ giữa độ cố kết trung bình U và nhân tố thời gian T_v (thoát nước một chiều). Đường cong dốc ở đầu rồi thoải dần: 90% lún cần T_v ≈ 0,848, còn 99% đòi hỏi T_v gấp đôi con số đó.",svg:SV(640,268,"Đường cong U-Tv",b)}];
+},
+
+/* ---- M2 bài 1: mặt cắt và mặt bằng bấc thấm ---- */
+m2t1:()=>{
+  let b=`<rect class="soft" x="40" y="104" width="560" height="120"/><rect class="soil" x="40" y="224" width="560" height="40"/>`+
+  `<rect class="sand" x="140" y="96" width="360" height="10"/>`+
+  `<polygon class="fillc" points="190,96 250,36 390,36 450,96"/>`+
+  `<line class="ln" x1="40" y1="96" x2="140" y2="96"/><line class="ln" x1="500" y1="96" x2="600" y2="96"/>`;
+  for(let x=150;x<=490;x+=40){b+=`<line class="ac" x1="${x}" y1="106" x2="${x}" y2="204"/>`;}
+  [170,250,330,410,470].forEach(x=>{b+=AR(x,160,x-16,160,"ac thin","aha")+AR(x,160,x+16,160,"ac thin","aha")});
+  [150,230,310,390,470].forEach(x=>{b+=AR(x,116,x,100,"ac thin","aha")});
+  b+=TX(320,62,"Nền đắp (kể cả gia tải)","tb","middle")+"";
+  b+=TX(560,90,"Đệm cát","t2","end")+TX(60,170,"Đất yếu","tb")+TX(60,248,"Lớp đất tốt","tb");
+  b+=`<line class="ln thin" x1="150" y1="240" x2="190" y2="240" marker-start="url(#ah)" marker-end="url(#ah)"/>`+TX(170,256,"s","tb","middle");
+  b+=`<line class="ln thin" x1="574" y1="106" x2="574" y2="224" marker-start="url(#ah)" marker-end="url(#ah)"/>`+TX(568,168,"H","tb","end");
+  b+=TX(320,218,"Bấc thấm PVD (các đường xanh)","t2","middle");
+  const sec={cap:"Mặt cắt: nước ép ra từ đất yếu chảy ngang về bấc thấm rồi theo bấc lên đệm cát. Đường thoát nước ngang chỉ cỡ nửa khoảng cách s, ngắn hơn rất nhiều so với đường thoát nước đứng H.",svg:SV(640,272,"Mặt cắt bấc thấm",b)};
+  /* mặt bằng */
+  let p="";const s=80,h=s*0.866;
+  [[100,60,[0,1,2,3,4]],[140,60+h,[0,1,2,3]],[100,60+2*h,[0,1,2,3,4]]].forEach(r=>{r[2].forEach(i=>{p+=`<circle cx="${r[0]+i*s}" cy="${r[1]}" r="3.5" fill="var(--accent)"/>`})});
+  p+=`<circle cx="220" cy="${60+h}" r="42" fill="none" class="am dash"/>`+
+  `<line class="ln thin" x1="180" y1="46" x2="260" y2="46" marker-start="url(#ah)" marker-end="url(#ah)"/>`+TX(220,38,"s","tb","middle")+
+  `<line class="ln thin" x1="178" y1="${60+h}" x2="262" y2="${60+h}"/>`+
+  TX(455,80,"● bấc thấm (dw)","t2")+TX(455,104,"◌ vùng ảnh hưởng","t2")+TX(455,128,"de = 1,05 s (tam giác)","tb")+
+  TX(455,150,"de = 1,13 s (vuông)","tb")+TX(455,184,"n = de / dw","tb");
+  const plan={cap:"Mặt bằng lưới tam giác: mỗi bấc “phụ trách” một vùng tròn tương đương đường kính de. Khoảng cách s càng nhỏ thì de càng nhỏ và đất cố kết càng nhanh.",svg:SV(640,230,"Mặt bằng lưới bấc thấm",p)};
+  return [sec,plan];
+},
+
+/* ---- M2 bài 3: gia tải và bù lún ---- */
+m2t3:()=>{
+  let b=`<rect class="soft" x="40" y="200" width="560" height="80"/>`+
+  `<polygon class="fillc" points="160,200 220,100 420,100 480,200"/>`+
+  `<polygon class="camb" points="220,100 238,70 402,70 420,100"/>`+
+  `<polygon class="cacc" points="238,70 256,40 384,40 402,70"/>`+
+  `<line class="ln" x1="40" y1="200" x2="160" y2="200"/><line class="ln" x1="480" y1="200" x2="600" y2="200"/>`+
+  `<line class="ln dash" x1="100" y1="100" x2="560" y2="100"/>`+
+  `<path class="rd dash" d="M200,200 Q320,232 460,200"/>`+
+  TX(320,160,"Nền đắp đến cao độ thiết kế","tb","middle")+TX(320,86,"Đắp bù lún (nằm lại)","tb","middle")+TX(320,32,"Đắp gia tải (dỡ sau khi chờ)","tb","middle")+
+  TX(570,96,"Cao độ thiết kế","t2","end")+
+  `<line class="rd thin" x1="530" y1="200" x2="530" y2="232" marker-start="url(#ahr)" marker-end="url(#ahr)"/>`+TX(524,220,"S","tb","end")+
+  TX(60,252,"Đất yếu (lún S sau khi đắp)","tb");
+  return [{cap:"Đắp bù lún (vàng) được giữ lại để sau khi nền lún mặt nền vẫn đạt cao độ thiết kế. Đắp gia tải (xanh) chỉ là tải tạm để ép đất lún nhanh và được dỡ đi. Đường đỏ nét đứt là mặt đất yếu sau khi lún S.",svg:SV(640,290,"Đắp bù lún và gia tải",b)}];
+},
+
+/* ---- M2 bài 4: đồ thị Asaoka ---- */
+m2t4:()=>{
+  const X=v=>70+v*8.4, Y=v=>230-v*3.4;
+  let b=`<line class="ln" x1="70" y1="20" x2="70" y2="230"/><line class="ln" x1="70" y1="230" x2="580" y2="230"/>`+
+  TX(14,16,"S_i (cm)")+TX(580,254,"S_(i−1) (cm)","","end");
+  [0,10,20,30,40,50,60].forEach(v=>{b+=`<line class="ln thin" x1="${X(v)}" y1="230" x2="${X(v)}" y2="234"/>`+TX(X(v),246,String(v),"t2","middle")+`<line class="ln thin" x1="66" y1="${Y(v)}" x2="70" y2="${Y(v)}"/>`+TX(62,Y(v)+4,String(v),"t2","end")});
+  b+=`<line class="ln dash" x1="${X(0)}" y1="${Y(0)}" x2="${X(60)}" y2="${Y(60)}"/>`+TX(X(61),Y(61),"S_i = S_(i−1)","t2")+
+  `<line class="ac" x1="${X(0)}" y1="${Y(5)}" x2="${X(60)}" y2="${Y(59)}"/>`;
+  let s=10;for(let i=0;i<7;i++){const n=5+0.9*s;b+=`<circle cx="${X(s)}" cy="${Y(n)}" r="3.8" fill="var(--amber)"/>`;s=n;}
+  b+=`<circle cx="${X(50)}" cy="${Y(50)}" r="5.5" fill="var(--red)"/>`+TX(X(50)-10,Y(50)+22,"S∞ = β0 / (1 − β1) = 50 cm","tb","end")+
+  TX(X(2),Y(5)-8,"β0 = 5","t2")+TX(X(34),Y(26),"S_i = β0 + β1·S_(i−1)","t2");
+  return [{cap:"Đồ thị Asaoka: các điểm (S_(i−1), S_i) nằm gần một đường thẳng. Giao điểm của đường thẳng đó với đường 45° (S_i = S_(i−1)) cho độ lún cuối cùng S∞. Ví dụ β0 = 5 cm, β1 = 0,9 cho S∞ = 50 cm.",svg:SV(640,268,"Đồ thị Asaoka",b)}];
+},
+
+/* ---- M3 bài 1: đào thay đất + cọc tre ---- */
+m3t1:()=>{
+  let b=`<rect class="soft" x="40" y="70" width="560" height="140"/><rect class="soil" x="40" y="210" width="560" height="40"/>`+
+  `<polygon class="sand" points="150,70 190,120 450,120 490,70"/>`+
+  `<line class="ln dash" x1="40" y1="92" x2="600" y2="92"/>`+TX(590,88,"Mực nước ngầm","t2","end");
+  for(let x=196;x<=444;x+=12){b+=`<line class="ac" x1="${x}" y1="122" x2="${x}" y2="186"/>`;}
+  b+=`<rect class="fillc" x="190" y="46" width="260" height="24" rx="2"/>`+TX(320,63,"Công trình / nền đường","tb","middle")+
+  TX(320,106,"Đệm cát đầm chặt (thay đất yếu đã đào)","tb","middle")+TX(320,160,"Cọc tre đóng dày","tb tw","middle")+
+  `<line class="ln thin" x1="520" y1="122" x2="520" y2="186" marker-start="url(#ah)" marker-end="url(#ah)"/>`+TX(528,158,"L cọc","t2")+
+  TX(60,200,"Đất yếu bên dưới được làm chặt","t2");
+  return [{cap:"Đào bỏ lớp đất yếu trên cùng, đóng cọc tre dày xuống đáy hố, rồi đắp cát đầm chặt. Đầu cọc cần nằm dưới mực nước ngầm để tre không bị mục.",svg:SV(640,262,"Đào thay đất và cọc tre",b)}];
+},
+
+/* ---- M4 bài 1: cọc xi măng đất ---- */
+m4t1:()=>{
+  let b=`<rect class="soft" x="40" y="100" width="560" height="130"/><rect class="soil" x="40" y="230" width="560" height="40"/>`+
+  `<polygon class="fillc" points="150,100 230,38 410,38 490,100"/>`+
+  `<line class="am" x1="150" y1="100" x2="490" y2="100" style="stroke-width:4"/>`+
+  `<line class="ln" x1="40" y1="100" x2="150" y2="100"/><line class="ln" x1="490" y1="100" x2="600" y2="100"/>`;
+  for(let x=170;x<=470;x+=40){b+=`<rect class="conc" x="${x-9}" y="100" width="18" height="130"/>`;}
+  b+=TX(320,70,"Nền đắp","tb","middle")+TX(520,96,"Vải/lưới địa kỹ thuật","t2","end")+TX(60,170,"Đất yếu","tb")+TX(60,254,"Lớp đất tốt","tb")+
+  TX(320,168,"Cọc xi măng đất (CDM)","tb","middle")+
+  AR(250,48,250,92,"ac","aha").replace('x1="250"','x1="250"')+
+  `<line class="ln thin" x1="170" y1="244" x2="210" y2="244" marker-start="url(#ah)" marker-end="url(#ah)"/>`+TX(190,260,"s","tb","middle");
+  const sec={cap:"Mặt cắt: cọc CDM xuyên qua đất yếu, chân cọc ngàm vào lớp đất tốt. Lớp vải hoặc lưới địa kỹ thuật ở đầu cọc giúp truyền tải từ nền đắp xuống cọc.",svg:SV(640,272,"Mặt cắt cọc xi măng đất",b)};
+  let c=`<rect class="soft" x="170" y="30" width="150" height="150"/><circle cx="245" cy="105" r="46" class="conc"/>`+
+  `<line class="ln thin" x1="170" y1="196" x2="320" y2="196" marker-start="url(#ah)" marker-end="url(#ah)"/>`+TX(245,212,"s (cạnh ô lưới)","tb","middle")+
+  `<line class="ln thin dash" x1="199" y1="105" x2="291" y2="105"/>`+TX(245,100,"d","tb","middle")+
+  TX(350,70,"A_cọc = π·d² / 4","tb")+TX(350,100,"A_ô = s² (lưới vuông)","tb")+TX(350,140,"a_s = A_cọc / A_ô","tb");
+  const cell={cap:"Ô lưới đơn vị trong mặt bằng: tỷ lệ diện tích thay thế a_s là phần diện tích do cọc chiếm trong ô.",svg:SV(640,225,"Ô lưới cọc",c)};
+  return [sec,cell];
+},
+
+/* ---- M5 bài 2: hệ thống chân không ---- */
+m5t2:()=>{
+  let b=`<rect class="soft" x="30" y="116" width="570" height="130"/>`+
+  `<rect class="sand" x="110" y="108" width="380" height="12"/>`+
+  `<rect class="soil" x="96" y="100" width="14" height="52" style="fill:var(--soil)"/><rect class="soil" x="490" y="100" width="14" height="52"/>`+
+  `<path class="am" d="M103,152 L103,102 L497,102 L497,152" style="stroke-width:3"/>`+
+  `<line class="ln" x1="30" y1="116" x2="96" y2="116"/><line class="ln" x1="504" y1="116" x2="600" y2="116"/>`+
+  `<line class="rd" x1="110" y1="113" x2="500" y2="113" style="stroke-width:3"/>`;
+  for(let x=130;x<=470;x+=30){b+=`<line class="ac" x1="${x}" y1="120" x2="${x}" y2="215"/>`;}
+  [150,260,370,450].forEach(x=>{b+=AR(x,34,x,94,"ln","ah")});
+  b+=TX(300,26,"Áp suất khí quyển ép xuống màng","t2","middle")+
+  TX(300,138,"Chân không (áp suất âm) dưới màng","tb hls","middle")+
+  TX(300,236,"Bấc thấm cắm vào đất yếu","t2","middle")+
+  `<rect class="conc" x="520" y="56" width="70" height="40" rx="4"/>`+TX(555,81,"Bơm","tb","middle")+
+  `<path class="rd" d="M497,113 L505,113 L505,76 L520,76" style="stroke-width:2.5"/>`+TX(560,50,"Bơm chân không","t2","middle")+
+  TX(20,100,"Màng kín khí","t2")+AR(80,104,100,102,"am","ahm")+
+  TX(103,172,"Hào kín","t2","middle")+TX(103,185,"khí","t2","middle")+
+  TX(497,172,"Hào kín","t2","middle")+TX(497,185,"khí","t2","middle")+
+  TX(300,100,"","");
+  return [{cap:"Sơ đồ cố kết chân không: màng kín khí phủ vùng xử lý, mép màng được chôn trong hào kín khí. Bơm hút khí và nước qua ống thu và bấc thấm, tạo áp suất âm dưới màng; áp suất khí quyển ép lên màng tương đương một tải đắp. Đường đỏ là ống thu nối với bơm.",svg:SV(640,262,"Hệ thống cố kết chân không",b)}];
+},
+
+/* ---- M6 bài 1: mặt trượt cung tròn ---- */
+m6t1:()=>{
+  const cx=230,cy=60,R=170;
+  const topY=x=>x<140?170:x<210?170-(x-140)*80/70:x<330?90:Math.min(170,90+(x-330)*80/70);
+  const arcY=x=>cy+Math.sqrt(R*R-(x-cx)*(x-cx));
+  let b=`<rect class="soft" x="30" y="170" width="580" height="90"/>`+
+  `<polygon class="fillc" points="140,170 210,90 330,90 400,170"/>`+
+  `<line class="ln" x1="30" y1="170" x2="140" y2="170"/><line class="ln" x1="400" y1="170" x2="610" y2="170"/>`;
+  for(let x=130;x<=370;x+=30){const y2=arcY(x),y1=topY(x);if(y2>y1)b+=`<line class="ln thin" x1="${x}" y1="${y1.toFixed(1)}" x2="${x}" y2="${y2.toFixed(1)}"/>`;}
+  b+=`<path class="rd" d="M100,170 A170,170 0 0 0 375,148"/>`+
+  `<circle cx="${cx}" cy="${cy}" r="4" fill="var(--ink)"/>`+TX(cx+8,cy-4,"O (tâm cung trượt)","tb")+
+  `<line class="ln dash thin" x1="${cx}" y1="${cy}" x2="100" y2="170"/><line class="ln dash thin" x1="${cx}" y1="${cy}" x2="375" y2="148"/><line class="ln dash thin" x1="${cx}" y1="${cy}" x2="${cx}" y2="230"/>`+
+  TX(cx+6,150,"R","tb")+TX(300,112,"Nền đắp","tb hl","middle")+TX(60,215,"Đất yếu","tb")+TX(396,236,"Mặt trượt giả định","tb","end")+
+  TX(440,70,"Các đường đứng mảnh là","t2")+TX(440,86,"các lát cắt (slice) dùng để","t2")+TX(440,102,"tính lực chống và gây trượt","t2");
+  return [{cap:"Mặt trượt cung tròn giả định (đường đỏ) tâm O, bán kính R. Khối đất phía trên được chia thành các lát cắt đứng. Phần mềm thử rất nhiều tâm và bán kính, rồi lấy mặt có hệ số an toàn nhỏ nhất.",svg:SV(640,272,"Mặt trượt cung tròn",b)}];
+},
+
+/* ---- M6 bài 3: thí nghiệm cắt cánh ---- */
+m6t3:()=>{
+  let b=`<rect class="soft" x="150" y="40" width="340" height="190"/>`+
+  `<line class="ln" x1="320" y1="14" x2="320" y2="160" style="stroke-width:3"/>`+
+  `<rect class="conc" x="297" y="140" width="46" height="70"/><line class="ln thin dash" x1="320" y1="140" x2="320" y2="210"/>`+
+  `<path class="am" d="M290,22 A30,10 0 1 1 350,22" marker-end="url(#ahm)"/>`+TX(360,20,"Mô men xoắn T","tb")+
+  `<line class="ln thin" x1="368" y1="140" x2="368" y2="210" marker-start="url(#ah)" marker-end="url(#ah)"/>`+TX(376,180,"H","tb")+
+  `<line class="ln thin" x1="297" y1="222" x2="343" y2="222" marker-start="url(#ah)" marker-end="url(#ah)"/>`+TX(320,240,"D","tb","middle")+
+  TX(170,120,"Sét yếu","tb")+TX(170,140,"(đo tại chỗ)","t2");
+  return [{cap:"Cắt cánh hiện trường: ấn cánh vào sét yếu đến độ sâu cần đo, xoay đều và ghi mô men xoắn lớn nhất T khi đất bị phá hoại. Từ T, chiều cao cánh H và đường kính cánh D tính được cường độ không thoát nước Su.",svg:SV(640,252,"Cắt cánh hiện trường",b)}];
+},
+
+/* ---- M7 bài 5: đoạn chuyển tiếp đầu cầu ---- */
+m7t5:()=>{
+  let b=`<rect class="soft" x="40" y="150" width="560" height="80"/>`+
+  `<rect class="conc" x="50" y="60" width="60" height="90"/>`+
+  `<rect class="conc" x="62" y="150" width="12" height="100"/><rect class="conc" x="86" y="150" width="12" height="100"/>`+
+  `<polygon class="fillc" points="110,60 600,60 600,150 110,150"/>`+
+  `<polygon class="conc" points="110,60 200,60 200,66 110,68"/>`+
+  `<line class="ln dash" x1="200" y1="60" x2="590" y2="60"/>`+
+  `<path class="rd" d="M200,66 Q330,70 420,98 T590,108" style="stroke-width:2.6"/>`+
+  TX(80,50,"Mố cầu","tb","middle")+TX(80,268,"Cọc (gần như không lún)","t2","middle")+
+  TX(560,52,"Mặt đường thiết kế","t2","end")+TX(560,126,"Mặt đường sau khi nền lún","tb","end")+
+  TX(155,86,"Bản quá độ","t2","middle")+
+  `<line class="am thin" x1="420" y1="60" x2="420" y2="98" marker-start="url(#ahm)" marker-end="url(#ahm)"/>`+TX(428,82,"ΔS","tb")+
+  `<line class="ln thin" x1="110" y1="140" x2="420" y2="140" marker-start="url(#ah)" marker-end="url(#ah)"/>`+TX(265,134,"L (chiều dài đoạn chuyển tiếp)","tb","middle")+
+  TX(130,200,"Đất yếu dưới nền đắp","tb");
+  return [{cap:"Mố cầu đặt trên cọc nên gần như không lún, còn nền đắp sau mố lún dần. Chênh lệch lún ΔS phân bố trên chiều dài L tạo ra độ dốc chênh lún i = ΔS / L. Đoạn chuyển tiếp và bản quá độ làm cho độ dốc này nhỏ và êm.",svg:SV(640,278,"Đoạn chuyển tiếp đầu cầu",b)}];
+}
+};
+
+/* ============ KIẾN THỨC BỔ SUNG: HIỂU SÂU HƠN + SAI LẦM THƯỜNG GẶP ============ */
+const EXTRA = {
+
+m1t1:{
+ deep:[
+  ["Kiểm tra chéo các chỉ tiêu trong bảng bằng quan hệ vật lý",
+   `<p>Các chỉ tiêu trong bảng không độc lập với nhau. Có thể kiểm tra chúng bằng quan hệ:</p>
+    <div class="formula"><div class="fx">e<sub>0</sub> = G<sub>s</sub> × γ<sub>w</sub> × (1 + W) / γ − 1</div>
+    <div class="tr"><b>Trong đó:</b> e<sub>0</sub> là hệ số rỗng; G<sub>s</sub> là tỷ trọng hạt đất (không có đơn vị, thường từ khoảng 2,65 đến 2,75 với đất sét); γ<sub>w</sub> là dung trọng của nước ≈ 9,81 kN/m³; W là độ ẩm viết dạng số thập phân (48% là 0,48); γ là dung trọng tự nhiên của đất (kN/m³).</div></div>
+    <div class="example"><div class="eh">Ví dụ kiểm tra từng bước</div>Lớp sét có W = 48%, γ = 17 kN/m³, G<sub>s</sub> = 2,7.<br>Bước 1: G<sub>s</sub> × γ<sub>w</sub> = 2,7 × 9,81 = 26,49.<br>Bước 2: nhân với (1 + W) = 1,48 được 39,20.<br>Bước 3: chia cho γ = 17 được 2,306; trừ 1 được e<sub>0</sub> ≈ <b>1,31</b>.<br>Bước 4: kiểm tra độ bão hòa S<sub>r</sub> = W × G<sub>s</sub> / e<sub>0</sub> = 0,48 × 2,7 / 1,31 ≈ 0,99. Gần bằng 1 nên đất bão hòa nước, số liệu hợp lý.</div>
+    <p>Nếu bảng ghi e<sub>0</sub> chênh lệch nhiều so với kết quả này, hoặc S<sub>r</sub> tính ra lớn hơn 1, thì có chỉ tiêu bị nhập sai hoặc mẫu không đồng nhất.</p>`],
+  ["Giá trị tiêu chuẩn và giá trị tính toán",
+   `<p>Mỗi lớp đất có nhiều mẫu thí nghiệm. Báo cáo địa chất thường cho <b>giá trị trung bình</b>, <b>giá trị tiêu chuẩn</b> và <b>giá trị tính toán</b>. Giá trị tính toán được hiệu chỉnh theo độ phân tán và độ tin cậy yêu cầu, nên thường bất lợi hơn trung bình. Tính lún thường dùng giá trị tiêu chuẩn, còn kiểm tra sức chịu tải và ổn định dùng giá trị tính toán. Cần đọc ghi chú của bảng để biết đang dùng loại nào.</p>`],
+  ["Đơn vị hay gây nhầm",
+   `<p>Dung trọng γ có thể ghi bằng kN/m³ hoặc g/cm³ (thực chất là khối lượng riêng ρ). Quy đổi gần đúng: 1,7 g/cm³ tương ứng khoảng 17 kN/m³. Hệ số nén a<sub>1-2</sub> có thể ghi 1/kPa, 1/MPa hoặc cm²/kg. Mô đun biến dạng E<sub>0</sub> có thể ghi kPa hoặc MPa. Nhập nhầm đơn vị vào bảng tính sẽ sai kết quả hàng chục đến hàng nghìn lần.</p>`]
+ ],
+ mist:["Dùng chỉ tiêu của lớp này cho lớp khác khi mặt cắt địa chất có nhiều thấu kính và biến đổi theo chiều dài tuyến.","Lấy giá trị tại một lỗ khoan duy nhất rồi áp cho cả đoạn dài, bỏ qua các lỗ khoan bất lợi hơn.","Nhập giá trị nén cố kết ở cấp tải không tương ứng với khoảng ứng suất thực tế của công trình."]
+},
+
+m1t2:{
+ deep:[
+  ["Vì sao độ sệt phản ánh được độ mềm của đất",
+   `<p>Đất sét ở trạng thái dẻo khi độ ẩm nằm giữa giới hạn dẻo W<sub>P</sub> và giới hạn chảy W<sub>L</sub>. Độ sệt I<sub>L</sub> cho biết độ ẩm tự nhiên W nằm ở vị trí nào trong khoảng đó: I<sub>L</sub> = 0 là sát giới hạn dẻo, I<sub>L</sub> = 1 là sát giới hạn chảy. Đất càng ẩm thì các hạt càng bị đẩy xa nhau bởi màng nước, lực dính giảm và đất càng mềm. Vì vậy I<sub>L</sub> lớn thường đi kèm c<sub>u</sub> nhỏ và e<sub>0</sub> lớn.</p>`],
+  ["Dùng SPT thế nào cho đúng",
+   `<p>SPT cho biết sức kháng xuyên ở hiện trường, rất hữu ích để so sánh các lớp với nhau. Một quan hệ thô thường được dùng để ước lượng cường độ sét theo kinh nghiệm là c<sub>u</sub> khoảng 6N (kPa); ví dụ N = 3 cho c<sub>u</sub> khoảng 18 kPa. Đây chỉ là con số tham khảo, sai số lớn.</p>
+    <p>Với đất sét yếu, SPT kém tin cậy hơn các thí nghiệm khác vì búa rơi xuống có thể làm đất chảy và nước lỗ rỗng sinh ra chưa kịp tiêu tán. Nhiều giá trị N = 0 hoặc 1 cho biết đất rất yếu nhưng không đủ để suy ra cường độ chính xác. Khi cần số liệu cho tính ổn định, nên dùng cắt cánh hoặc nén ba trục UU.</p>`],
+  ["Nhận biết đất yếu bằng nhiều dấu hiệu cùng lúc",
+   `<p>Không nên chỉ dựa vào một chỉ tiêu. Dấu hiệu đất yếu thường xuất hiện cùng nhau: I<sub>L</sub> lớn, độ ẩm W gần hoặc lớn hơn W<sub>L</sub>, e<sub>0</sub> lớn, γ nhỏ, N-SPT nhỏ, c<sub>u</sub> nhỏ, hệ số nén a<sub>1-2</sub> lớn. Nếu chỉ có một chỉ tiêu bất thường còn các chỉ tiêu khác bình thường thì cần xem lại số liệu đó.</p>`]
+ ],
+ mist:["Áp bảng phân loại theo I<sub>L</sub> cho đất rời (cát, sạn). I<sub>L</sub> chỉ có nghĩa với đất dính.","Kết luận “đất yếu” chỉ vì N-SPT thấp ở một vài điểm, không đối chiếu với I<sub>L</sub>, e<sub>0</sub> và c<sub>u</sub>.","Dùng quan hệ c<sub>u</sub> ≈ 6N làm số liệu thiết kế thay cho thí nghiệm."]
+},
+
+m1t3:{
+ deep:[
+  ["Công thức lún đến từ đâu",
+   `<p>Khi đất nén, thể tích lỗ rỗng giảm. Nếu hệ số rỗng giảm một lượng Δe thì chiều dày lớp giảm theo tỷ lệ Δe / (1 + e<sub>0</sub>). Nhân với chiều dày H được độ lún: S = H × Δe / (1 + e<sub>0</sub>). Trên đồ thị e – lg σ′, đoạn nén nguyên thủy là đường thẳng với độ dốc C<sub>c</sub>, nên Δe = C<sub>c</sub> × lg[(σ′<sub>v0</sub> + Δσ) / σ′<sub>v0</sub>]. Thay vào ta có công thức ở trên.</p>`],
+  ["Đất quá cố kết: tách làm hai đoạn",
+   `<p>Khi σ′<sub>v0</sub> nhỏ hơn σ′<sub>p</sub> (đất từng chịu áp lực lớn hơn trong quá khứ), phần tải đầu tiên chỉ nén lại đất trên đoạn có độ dốc C<sub>s</sub> (nhỏ). Chỉ khi áp lực vượt σ′<sub>p</sub> đất mới nén mạnh với độ dốc C<sub>c</sub>:</p>
+    <div class="formula"><div class="fx">Nếu σ′<sub>v0</sub> + Δσ &gt; σ′<sub>p</sub>:<br>S = [C<sub>s</sub>/(1+e<sub>0</sub>)] H lg(σ′<sub>p</sub>/σ′<sub>v0</sub>) + [C<sub>c</sub>/(1+e<sub>0</sub>)] H lg[(σ′<sub>v0</sub>+Δσ)/σ′<sub>p</sub>]</div>
+    <div class="tr"><b>Trong đó:</b> C<sub>s</sub> là chỉ số nở (độ dốc đoạn nén lại, nhỏ hơn C<sub>c</sub> nhiều); σ′<sub>p</sub> là áp lực tiền cố kết; các đại lượng còn lại như công thức ban đầu. Nếu σ′<sub>v0</sub> + Δσ ≤ σ′<sub>p</sub> thì chỉ còn số hạng đầu, với lg[(σ′<sub>v0</sub>+Δσ)/σ′<sub>v0</sub>].</div></div>
+    <div class="example"><div class="eh">Ví dụ từng bước</div>H = 3 m; e<sub>0</sub> = 1,2; C<sub>s</sub> = 0,1; C<sub>c</sub> = 0,5; σ′<sub>v0</sub> = 40 kPa; σ′<sub>p</sub> = 60 kPa; Δσ = 50 kPa.<br>Bước 1: σ′<sub>v0</sub> + Δσ = 90 kPa, lớn hơn σ′<sub>p</sub> = 60 nên phải tách hai đoạn.<br>Bước 2: đoạn nén lại = 0,1/2,2 × 3 × lg(60/40) = 0,04545 × 3 × 0,1761 ≈ 0,024 m.<br>Bước 3: đoạn nguyên thủy = 0,5/2,2 × 3 × lg(90/60) = 0,2273 × 3 × 0,1761 ≈ 0,120 m.<br>Bước 4: S = 0,024 + 0,120 ≈ <b>0,144 m</b>.</div>`],
+  ["Ước tính gia tăng ứng suất Δσ dưới nền đắp",
+   `<p>Một cách gần đúng thường dùng cho tải dải rộng là phân bố tải theo độ sâu: Δσ ≈ q × B / (B + z). Trong đó q là tải trọng đáy nền đắp (kPa) = γ<sub>đắp</sub> × h, với γ<sub>đắp</sub> là dung trọng đất đắp và h là chiều cao đắp; B là bề rộng tải (m); z là độ sâu từ đáy nền đắp đến điểm tính (m). Ví dụ q = 60 kPa, B = 20 m, z = 5 m cho Δσ ≈ 60 × 20 / 25 = 48 kPa. Dưới tim nền rộng, Δσ gần bằng q ở độ sâu nông và giảm dần khi xuống sâu. Tiêu chuẩn cơ sở 41-2022 có cách tính riêng của nó, nên dùng cách đó khi lập hồ sơ.</p>`],
+  ["Ba thành phần của lún",
+   `<p>Tổng lún gồm lún tức thời (xảy ra ngay khi đặt tải, do đất biến dạng không thoát nước), lún cố kết sơ cấp (do nước thoát ra, là phần chính của bài này) và lún thứ cấp (đất tiếp tục nén chậm kể cả khi nước đã thoát hết, thường đáng kể với đất hữu cơ và bùn). Bảng tính cần ghi rõ đã tính thành phần nào.</p>`]
+ ],
+ mist:["Dùng ứng suất tổng thay cho ứng suất hữu hiệu: phải trừ áp lực nước lỗ rỗng, và nhớ cập nhật khi mực nước ngầm thay đổi.","Tính cả lớp dày 10 m như một lớp: nên chia nhỏ vì σ′<sub>v0</sub> và Δσ thay đổi theo độ sâu.","Lấy e<sub>0</sub>, C<sub>c</sub> từ mẫu ở độ sâu khác với lớp đang tính.","Không kiểm tra đất có quá cố kết hay không và dùng C<sub>c</sub> cho toàn bộ, làm lún lớn hơn thực tế."]
+},
+
+m1t4:{
+ deep:[
+  ["Đổi đơn vị C<sub>v</sub> cho đúng",
+   `<p>Phòng thí nghiệm thường báo C<sub>v</sub> theo cm²/s, trong khi tính toán lại dùng m²/năm. Quy đổi: 1 cm²/s = 10⁻⁴ m²/s, và 1 năm ≈ 3,15 × 10⁷ giây, nên 1 cm²/s ≈ 3 150 m²/năm. Ví dụ C<sub>v</sub> = 0,002 cm²/s tương ứng 0,002 × 3 150 ≈ 6,3 m²/năm.</p>`],
+  ["Chọn H<sub>dr</sub> như thế nào",
+   `<p>H<sub>dr</sub> là quãng đường dài nhất nước phải đi để thoát ra. Với lớp sét dày 8 m nằm giữa lớp cát phía trên và lớp cát phía dưới, nước thoát ra cả hai phía, H<sub>dr</sub> = 8/2 = 4 m. Nếu phía dưới là đá hoặc sét cứng không thấm nước, nước chỉ thoát lên trên, H<sub>dr</sub> = 8 m. Thời gian lún tỷ lệ với H<sub>dr</sub>², nên sai chọn H<sub>dr</sub> làm thời gian dự báo sai gấp 4 lần.</p>`],
+  ["Mặt hạn chế của lý thuyết",
+   `<p>Lý thuyết Terzaghi giả thiết C<sub>v</sub> không đổi, tải đặt tức thời và thoát nước một chiều. Thực tế nền đắp được đắp dần, đất có các thấu kính cát làm nước thoát nhanh hơn nhiều, nên lún ngoài hiện trường thường nhanh hơn dự báo từ C<sub>v</sub> phòng thí nghiệm. Đó là lý do cần quan trắc lún rồi hiệu chỉnh bằng Asaoka hoặc Hyperbolic (Module 2).</p>`]
+ ],
+ mist:["Nhầm đơn vị C<sub>v</sub> (cm²/s với m²/năm) làm thời gian sai hàng nghìn lần.","Lấy H<sub>dr</sub> bằng cả chiều dày lớp khi lớp thoát nước hai mặt.","Dùng công thức U &lt; 60% cho trường hợp U = 90%, hoặc ngược lại.","Coi dự báo từ phòng thí nghiệm là chính xác mà không đối chiếu số liệu quan trắc."]
+},
+
+m2t1:{
+ deep:[
+  ["Vì sao d<sub>e</sub> bằng 1,05 s và 1,13 s",
+   `<p>Mỗi bấc thấm phụ trách một phần diện tích của lưới. Với lưới tam giác đều cạnh s, diện tích của mỗi ô sáu cạnh quanh một bấc là 0,866 s². Quy ô đó về hình tròn có cùng diện tích: π d<sub>e</sub>²/4 = 0,866 s², suy ra d<sub>e</sub> ≈ 1,05 s. Với lưới vuông cạnh s, diện tích mỗi ô là s², suy ra d<sub>e</sub> ≈ 1,13 s. Với cùng khoảng cách s, lưới tam giác phụ trách vùng nhỏ hơn nên cố kết nhanh hơn một chút và được dùng phổ biến.</p>`],
+  ["Kể thêm vùng đất bị xáo trộn (smear) quanh bấc",
+   `<p>Khi cắm bấc, đất xung quanh bị xáo trộn và thấm kém hơn. Công thức đầy đủ hơn của F(n) là:</p>
+    <div class="formula"><div class="fx">F(n) = ln(n / S) + (k<sub>h</sub> / k<sub>s</sub>) × ln(S) − 3/4</div>
+    <div class="tr"><b>Trong đó:</b> n = d<sub>e</sub> / d<sub>w</sub>; S = d<sub>s</sub> / d<sub>w</sub> là tỷ số đường kính vùng xáo trộn d<sub>s</sub> so với đường kính tương đương bấc; k<sub>h</sub> là hệ số thấm ngang của đất chưa bị xáo trộn; k<sub>s</sub> là hệ số thấm của vùng xáo trộn (nhỏ hơn k<sub>h</sub>). Khi k<sub>s</sub> nhỏ hơn k<sub>h</sub>, F(n) lớn hơn so với công thức đơn giản, dẫn đến U<sub>h</sub> nhỏ hơn: bấc thấm làm việc kém hơn lý thuyết lý tưởng.</div></div>
+    <p>Giá trị S và k<sub>h</sub>/k<sub>s</sub> thường chọn theo kinh nghiệm hoặc khuyến nghị của tiêu chuẩn thiết kế. Bảng tính của khóa học đã kể đến các yếu tố này.</p>`],
+  ["Ba cách chỉnh thiết kế khi chưa đạt thời gian yêu cầu",
+   `<p>Giảm khoảng cách s (tốn thêm bấc nhưng hiệu quả mạnh nhất vì c<sub>h</sub> t / d<sub>e</sub>² thay đổi theo bình phương); kéo dài thời gian chờ nếu tiến độ cho phép; hoặc kết hợp đắp gia tải để rút ngắn thời gian cần lún cho đến cao độ mong muốn.</p>`]
+ ],
+ mist:["Bỏ qua vùng xáo trộn nên kết luận “90% sau 6 tháng” quá lạc quan.","Cắm bấc không đủ độ sâu, bỏ lại lớp đất yếu phía dưới không được thoát nước.","Nhầm lưới tam giác với lưới vuông khi chọn hệ số 1,05 hoặc 1,13.","Nhập c<sub>h</sub> bằng C<sub>v</sub> mà không xem xét đất có tính phân lớp hay không."]
+},
+
+m2t2:{
+ deep:[
+  ["Cơ chế thoát nước của hệ PVD + SBD",
+   `<p>Nước từ đất yếu đi theo ba chặng: (1) chảy ngang từ đất vào bấc đứng, (2) chảy lên theo bấc đứng, (3) chảy ngang theo lớp thoát nước ở mặt nền về mép. Chặng (3) có thể do lớp cát đệm đảm nhiệm hoặc do bấc thấm ngang. Điều kiện để hệ làm việc là khả năng thoát nước của chặng cuối không được nhỏ hơn lưu lượng nước mà các bấc đứng đẩy lên.</p>`],
+  ["Kiểm tra khả năng thoát nước của bấc ngang",
+   `<p>Lưu lượng bấc ngang tải được phụ thuộc vào tiết diện và độ thấm của lõi thoát nước, theo dạng q = k<sub>w</sub> × i × A. Trong đó k<sub>w</sub> là hệ số thấm của lõi bấc, i là độ dốc thủy lực dọc tuyến bấc, A là tiết diện thoát nước của bấc. Tuyến bấc càng dài thì lưu lượng cần tải càng lớn, nên chiều dài mỗi tuyến cần được giới hạn hoặc cần bố trí thêm các tuyến thu. Giá trị cụ thể phải lấy từ số liệu kỹ thuật của loại bấc dùng cho dự án.</p>`]
+ ],
+ mist:["Dùng chiều dài tuyến bấc ngang quá lớn làm nước dồn lại, áp lực nước dư không tiêu tán được.","Nối bấc đứng với bấc ngang kém hoặc bị gấp khúc làm đứt đường thoát nước.","Quên kiểm tra việc nước thoát ra mép nền có bị tắc bởi rãnh đất hay không."]
+},
+
+m2t3:{
+ deep:[
+  ["Ước tính khối lượng đắp bù lún",
+   `<p>Phần đất đắp bù lún có hình thang đặt ngay dưới mặt nền, chiều cao bằng độ lún S. Diện tích mặt cắt ≈ (a + b)/2 × S, trong đó a là bề rộng mặt nền thiết kế (m), b = a + 2 m S là bề rộng đáy lớp bù (m), với m là hệ số mái dốc (mái 1:1,5 thì m = 1,5).</p>
+    <div class="example"><div class="eh">Ví dụ từng bước</div>Mặt nền rộng a = 12 m; mái 1:1,5 (m = 1,5); lún S = 0,8 m; đoạn nền dài L = 100 m.<br>Bước 1: b = 12 + 2 × 1,5 × 0,8 = 14,4 m.<br>Bước 2: diện tích mặt cắt = (12 + 14,4)/2 × 0,8 = 13,2 × 0,8 = 10,56 m².<br>Bước 3: thể tích ≈ 10,56 × 100 ≈ <b>1 056 m³</b> đất đắp bù lún.<br>Đây là thể tích nền sau đầm nén. Khi lập dự toán phải nhân thêm hệ số đầm nén K và phần hao hụt vận chuyển theo định mức.</div>
+    <p>Khối lượng gia tải được tính tương tự: diện tích hình thang của phần gia tải × chiều dài. Vì phần này được dỡ đi nên chi phí gồm cả đắp và dỡ, nhưng có thể tận dụng đất ở đoạn kế tiếp.</p>`],
+  ["Vì sao nên đắp theo giai đoạn",
+   `<p>Đất yếu có sức chống cắt thấp. Đắp quá nhanh làm áp lực nước lỗ rỗng tăng nhanh hơn khả năng thoát nước, ứng suất hữu hiệu không kịp tăng, nền có thể trượt. Đắp từng cấp rồi chờ đất cố kết và tăng cường độ là cách thông thường để giữ ổn định. Mỗi giai đoạn đắp cần kiểm toán trượt riêng (Module 6) và theo dõi lún, nước lỗ rỗng ngoài hiện trường.</p>`]
+ ],
+ mist:["Nhầm khối lượng gia tải (dỡ đi) với khối lượng đắp bù lún (giữ lại).","Quên hệ số đầm nén K và mái dốc khi tính thể tích.","Bù lún chỉ theo tổng lún S mà không tính lún dư còn lại sau khi làm mặt đường.","Dỡ gia tải khi lún chưa đạt độ cố kết yêu cầu."]
+},
+
+m2t4:{
+ deep:[
+  ["Cách thực hiện Asaoka bằng bảng tính",
+   `<p>Bước 1: lấy số liệu lún tại các thời điểm cách đều nhau, ví dụ cứ 15 ngày một số liệu. Bước 2: ghi vào hai cột, cột B là S<sub>i</sub> và cột A là S<sub>i−1</sub> (số liệu của hàng trước). Bước 3: vẽ biểu đồ phân tán với trục hoành là cột A, trục tung là cột B. Bước 4: dùng hàm SLOPE để lấy β<sub>1</sub> và INTERCEPT để lấy β<sub>0</sub> (Excel 2016 đều có hai hàm này). Bước 5: tính S<sub>∞</sub> = β<sub>0</sub> / (1 − β<sub>1</sub>).</p>`],
+  ["Ví dụ Hyperbolic",
+   `<p>Chọn thời điểm bắt đầu t<sub>0</sub> sau khi đắp xong, ví dụ lún lúc đó S<sub>0</sub> = 20 cm. Với mỗi số liệu về sau, tính (t − t<sub>0</sub>) / (S − S<sub>0</sub>) và vẽ theo (t − t<sub>0</sub>). Giả sử đường thẳng có độ dốc β = 0,025 cm⁻¹. Khi đó S<sub>∞</sub> = S<sub>0</sub> + 1/β = 20 + 1/0,025 = 20 + 40 = <b>60 cm</b>.</p>`],
+  ["Khi nào dự báo đáng tin",
+   `<p>Dự báo cần các điểm nằm gần một đường thẳng (hệ số tương quan cao). Khi số liệu còn ngắn hoặc nền đang được đắp thêm, đường lún chưa ổn định thì kết quả dao động rất mạnh. Nên làm lại dự báo mỗi khi có thêm số liệu và so sánh hai phương pháp: nếu hai kết quả lệch nhau nhiều thì dự báo còn chưa chắc.</p>`]
+ ],
+ mist:["Dùng số liệu trong giai đoạn đang đắp tải để chạy Asaoka.","Số liệu không cách đều thời gian mà vẫn đưa vào Asaoka.","Chọn khoảng thời gian Δt quá ngắn nên nhiễu đo chi phối kết quả.","Kết luận “lún xong” chỉ vì mấy ngày liền lún không tăng, trong khi chưa có dự báo S<sub>∞</sub>."]
+},
+
+m2t5:{
+ deep:[
+  ["Các câu hỏi giúp quyết định",
+   `<ol class="steps"><li>Lớp đất yếu dày bao nhiêu và cần bấc dài tới đâu? Bấc quá dài thì phải kiểm tra thiết bị cắm có đủ khả năng và kiểm tra lực cản trong lõi bấc.</li><li>Tiến độ yêu cầu bao lâu? Nếu rất ngắn thì phải giảm khoảng cách s hoặc kết hợp gia tải lớn hơn, hoặc chuyển sang giải pháp khác.</li><li>Có nguồn cát thoát nước đạt chất lượng ở gần không? Cát thoát nước xa làm phương án giếng cát và đệm cát đắt lên rõ rệt.</li><li>Nền có chịu được máy móc thi công không? Máy cắm bấc cần mặt bằng đủ cứng để di chuyển.</li><li>Mức độ kinh nghiệm của nhà thầu và máy móc sẵn có trong khu vực.</li></ol>`],
+  ["So sánh phương án bằng chi phí quy đổi",
+   `<p>Khi hai phương án cùng đạt yêu cầu về độ cố kết và thời gian, hãy so sánh tổng chi phí trên mỗi mét vuông xử lý, gồm vật liệu thoát nước, thi công, đệm cát và chi phí kéo dài tiến độ. Cách này tránh việc chọn phương án chỉ vì đơn giá bấc hoặc cát thấp mà bỏ qua các khoản đi kèm.</p>`]
+ ],
+ mist:["Chỉ so đơn giá vật liệu mà quên chi phí đệm cát và chi phí thời gian.","Chọn phương án chỉ vì quen dùng mà không tính phương án còn lại.","Không kiểm tra lại điều kiện thi công thực tế khi đã chọn xong."]
+},
+
+m3t1:{
+ deep:[
+  ["Cọc tre làm gì cho nền",
+   `<p>Khi đóng dày cọc vào đất yếu, thể tích cọc chiếm chỗ đẩy đất ra, làm đất xung quanh chặt hơn, tăng sức chịu tải. Khác với cọc bê tông, cọc tre ngắn và nhỏ nên chủ yếu phát huy tác dụng làm chặt đất và truyền tải xuống tầng đất sâu hơn một chút. Vì vậy chất lượng đệm cát bên trên (đầm đủ chặt, dày đủ) quan trọng không kém bản thân hàng cọc.</p>`],
+  ["Đo mật độ cọc",
+   `<p>Mật độ cọc thường ghi bằng số cọc trên một mét vuông. Với lưới vuông cạnh s (m), mật độ = 1/s² cọc/m². Ví dụ s = 0,2 m cho 1/0,04 = 25 cọc/m². Khi tính số lượng cọc cho dự toán, lấy mật độ nhân diện tích xử lý và cộng thêm hao hụt.</p>`]
+ ],
+ mist:["Để đầu cọc tre nằm trên mực nước ngầm làm cọc mục nhanh.","Đầm đệm cát không đủ chặt nên nền vẫn lún không đều.","Đào hố móng không có biện pháp thoát nước và chống sạt vách."]
+},
+
+m3t2:{
+ deep:[
+  ["Bảng kiểm tra trước khi chọn biện pháp",
+   `<table><tr><th>Điều kiện cần kiểm tra</th><th>Phù hợp</th><th>Nên xem xét biện pháp khác</th></tr>
+    <tr><td>Độ dày lớp đất yếu</td><td>Mỏng, ở gần mặt đất</td><td>Dày nhiều mét</td></tr>
+    <tr><td>Tải trọng công trình</td><td>Nhẹ, vừa</td><td>Nền đắp cao, tải lớn</td></tr>
+    <tr><td>Mực nước ngầm</td><td>Cao, ổn định</td><td>Thấp hoặc dao động mạnh</td></tr>
+    <tr><td>Mặt bằng thi công</td><td>Đủ rộng để đào, đóng cọc</td><td>Chật hẹp, sát công trình hiện hữu</td></tr></table>
+    <p>Bảng chỉ nêu xu hướng chung; ngưỡng cụ thể cần theo bài giảng và điều kiện dự án.</p>`]
+ ],
+ mist:["Dùng cho nền đắp cao hoặc đất yếu dày vì chi phí thấp.","Quên kiểm tra tre đủ tuổi, thẳng, không sâu bệnh.","Không xét ảnh hưởng của việc hạ mực nước khi thi công đến công trình lân cận."]
+},
+
+m4t1:{
+ deep:[
+  ["Tải truyền xuống cọc nhiều hơn xuống đất",
+   `<p>Cọc cứng hơn đất nhiều nên “hút” tải về phía mình. Với giả thiết cọc và đất lún bằng nhau (biến dạng như nhau), ứng suất trên cọc σ<sub>p</sub> và trên đất σ<sub>s</sub> khi tải mặt là q:</p>
+    <div class="formula"><div class="fx">σ<sub>p</sub> = n × q / [1 + (n − 1) a<sub>s</sub>] &nbsp;&nbsp; σ<sub>s</sub> = q / [1 + (n − 1) a<sub>s</sub>]</div>
+    <div class="tr"><b>Trong đó:</b> n = E<sub>cọc</sub> / E<sub>đất</sub> là tỷ số mô đun của cọc và đất; a<sub>s</sub> là tỷ lệ diện tích thay thế; q là tải phân bố trên mặt (kPa).</div></div>
+    <div class="example"><div class="eh">Ví dụ nối tiếp với ví dụ ở trên</div>E<sub>cọc</sub> = 60 MPa, E<sub>đất</sub> = 2 MPa nên n = 30; a<sub>s</sub> = 0,196; q = 60 kPa.<br>Bước 1: 1 + (30 − 1) × 0,196 = 1 + 5,68 = 6,68.<br>Bước 2: σ<sub>p</sub> = 30 × 60 / 6,68 ≈ <b>269 kPa</b>.<br>Bước 3: σ<sub>s</sub> = 60 / 6,68 ≈ <b>9 kPa</b>.<br>Kiểm tra cân bằng: 0,196 × 269 + 0,804 × 9 ≈ 52,7 + 7,2 ≈ 60 kPa, đúng bằng q.<br>Nhận xét: cọc chịu ứng suất gấp khoảng 30 lần đất, nên cường độ cọc q<sub>u</sub> phải đủ lớn so với 269 kPa (cùng hệ số an toàn thích hợp).</div>`],
+  ["Lún của nền gia cố",
+   `<p>Trong vùng có cọc, mô đun nền tương đương lớn hơn đất gốc E<sub>td</sub> / E<sub>đất</sub> lần (ví dụ 13,4 / 2 ≈ 6,7 lần), nên lún của vùng đó giảm xấp xỉ cùng tỷ lệ. Lớp đất yếu nằm dưới mũi cọc (nếu cọc không xuyên hết) vẫn lún như bình thường và thường là thành phần chính của lún còn lại.</p>`],
+  ["Vai trò của lưới địa kỹ thuật",
+   `<p>Giữa nền đắp và đầu cọc có lớp vải hoặc lưới địa kỹ thuật cùng với đệm đất tốt. Lớp này tạo hiệu ứng vòm: tải từ nền đắp được truyền theo vòm xuống đầu cọc, ít tải rơi vào đất yếu giữa các cọc. Lực kéo trong lưới được kiểm toán theo tiêu chuẩn thứ hai ghi trong đề cương.</p>`]
+ ],
+ mist:["Lấy E<sub>cọc</sub> từ q<sub>u</sub> phòng thí nghiệm mà không chiết giảm cho điều kiện hiện trường.","Quên rằng lớp đất yếu dưới mũi cọc vẫn lún.","Cho phép tỷ lệ thay thế a<sub>s</sub> quá nhỏ khiến cọc không phát huy hiệu quả, hoặc quá lớn làm tốn kém.","Dùng nhầm tiêu chuẩn cho nhầm loại kiểm toán (lún, trượt, sức chịu tải)."]
+},
+
+m4t2:{
+ deep:[
+  ["Vì sao cọc trên chịu tải lớn hơn cọc dưới",
+   `<p>Lực dọc trong cọc lớn nhất ở đầu cọc và giảm dần theo độ sâu vì một phần tải được truyền sang đất xung quanh bằng ma sát hông. Do đó đoạn trên cần cường độ cao hơn, đoạn dưới có thể giảm hàm lượng xi măng. Tuy nhiên cần kiểm tra từng tiết diện: ứng suất trong cọc tại độ sâu z không được vượt quá q<sub>u</sub>(z) chia cho hệ số an toàn thích hợp.</p>`],
+  ["Quy trình tối ưu",
+   `<ol class="steps"><li>Chia cọc thành các đoạn theo lớp đất và theo sự giảm lực dọc.</li><li>Với mỗi đoạn, chọn hàm lượng xi măng tương ứng q<sub>u</sub> từ kết quả trộn thử.</li><li>Kiểm tra sức chịu tải tại tiết diện đầu mỗi đoạn.</li><li>Tính tổng khối lượng xi măng của cọc và so với phương án một hàm lượng.</li><li>Chọn phương án có chi phí nhỏ nhất mà vẫn đạt mọi kiểm toán.</li></ol>`]
+ ],
+ mist:["Chia đoạn quá nhiều làm thi công phức tạp, dễ sai hàm lượng ngoài hiện trường.","Giảm hàm lượng đoạn dưới nhưng quên kiểm tra cường độ đoạn đó có đủ chịu tải ở tiết diện đó.","Không có biện pháp kiểm soát hàm lượng xi măng theo độ sâu khi thi công."]
+},
+
+m4t3:{
+ deep:[
+  ["Những yếu tố quyết định cường độ của đất trộn xi măng",
+   `<ul class="plain"><li><b>Hàm lượng xi măng</b>: tăng thì cường độ tăng, nhưng tăng chậm dần.</li><li><b>Độ ẩm của đất gốc</b>: đất càng ẩm thì càng cần nhiều xi măng để đạt cùng cường độ.</li><li><b>Hàm lượng hữu cơ</b> trong đất: hữu cơ cản trở phản ứng của xi măng nên cường độ thấp rõ rệt.</li><li><b>Tuổi mẫu</b>: cường độ tăng theo thời gian, nên phải ghi rõ q<sub>u</sub> ứng với bao nhiêu ngày (thường 28 ngày).</li><li><b>Chất lượng trộn</b>: trộn đều hay không ảnh hưởng mạnh đến độ phân tán của cường độ.</li></ul>`],
+  ["Tương quan giữa q<sub>u</sub> và E",
+   `<p>Mô đun đàn hồi của đất trộn xi măng thường được ước theo một bội số của q<sub>u</sub>, tức E ≈ k × q<sub>u</sub>. Hệ số k phụ thuộc loại đất, hàm lượng xi măng và mức ứng suất đo (ví dụ E<sub>50</sub> là mô đun tại 50% cường độ). Nên dùng số liệu đo từ chính mẫu của dự án thay vì một hệ số chung.</p>`]
+ ],
+ mist:["Chọn q<sub>u</sub> lớn nhất của các mẫu làm giá trị thiết kế.","Dùng q<sub>u</sub> ở tuổi 28 ngày với giá trị E ước từ tuổi 7 ngày hoặc ngược lại.","Chỉ trộn thử một loại đất trong khi tuyến đi qua nhiều lớp đất khác nhau."]
+},
+
+m4t4:{
+ deep:[
+  ["Bố trí cọc thử và đọc kết quả khoan lõi",
+   `<p>Cọc thử nên đặt ở nơi đại diện cho đất yếu nhất và ở nơi đất tốt hơn. Sau khoan lõi, kiểm tra ba thứ: tỷ lệ thu hồi lõi (đoạn lõi liền mạch so với chiều dài khoan; càng cao càng tốt); cường độ q<sub>u</sub> theo độ sâu (phát hiện đoạn yếu); và hình thái cọc (có lẫn bùn, có khoảng rỗng, có đoạn đứt hay không). Cọc thử đạt khi giá trị cường độ đại diện lớn hơn cường độ thiết kế và độ phân tán không quá lớn.</p>`],
+  ["Thí nghiệm nén tĩnh",
+   `<p>Nén tĩnh đo trực tiếp quan hệ tải – lún của cọc (hoặc của cọc cùng đất xung quanh). Kết quả cho biết sức chịu tải thực tế và độ lún ở tải làm việc, dùng để đối chiếu với bảng tính. Nếu độ lún đo được lớn hơn tính toán thì cần xem lại E đã chọn.</p>`]
+ ],
+ mist:["Khoan lõi khi cọc chưa đủ tuổi nên không phản ánh cường độ thiết kế.","Chỉ chọn các đoạn lõi nguyên vẹn để thí nghiệm, bỏ qua đoạn vỡ vụn.","Làm cọc thử bằng thiết bị hoặc thông số khác với thi công đại trà."]
+},
+
+m4t5:{
+ deep:[
+  ["Tìm nguyên nhân trước khi quyết định",
+   `<table><tr><th>Triệu chứng</th><th>Nguyên nhân thường gặp</th><th>Hướng xử lý</th></tr>
+    <tr><td>Cường độ thấp đều ở mọi độ sâu</td><td>Hàm lượng xi măng hoặc tỷ lệ nước/xi măng của vữa chưa phù hợp</td><td>Tăng hàm lượng, điều chỉnh vữa</td></tr>
+    <tr><td>Một đoạn cọc yếu</td><td>Đất ở đoạn đó nhiều hữu cơ hoặc rất ẩm</td><td>Tăng hàm lượng cho đoạn đó, tăng số lần trộn</td></tr>
+    <tr><td>Cường độ dao động mạnh</td><td>Trộn không đều, tốc độ khoan hoặc rút cần không ổn định</td><td>Kiểm soát lại quy trình, tăng số lần quay cánh trộn</td></tr>
+    <tr><td>Cọc đứt đoạn</td><td>Ngừng bơm vữa hoặc rút cần quá nhanh</td><td>Kiểm tra bơm, ghi lại lưu lượng theo độ sâu</td></tr></table>`]
+ ],
+ mist:["Chỉ tăng hàm lượng xi măng mà không tìm hiểu nguyên nhân do thi công.","Điều chỉnh thiết kế nhưng không làm cọc thử lại để kiểm chứng.","Chấp nhận giá trị trung bình đạt trong khi có đoạn rất yếu."]
+},
+
+m5t1:{
+ deep:[
+  ["Lún do chân không tính thế nào",
+   `<p>Về nguyên lý, áp suất chân không p<sub>v</sub> tác động như một gia tăng ứng suất hữu hiệu Δσ′ = p<sub>v</sub> (đã trừ hao hụt thực tế). Dùng công thức lún cố kết như bài Module 1 với Δσ = p<sub>v</sub>, hoặc Δσ = p<sub>v</sub> + γ<sub>đắp</sub> × h nếu kết hợp thêm đắp tải.</p>
+    <div class="example"><div class="eh">Ví dụ từng bước</div>Lớp đất yếu H = 6 m; e<sub>0</sub> = 1,8; C<sub>c</sub> = 0,9; σ′<sub>v0</sub> = 30 kPa (giữa lớp); p<sub>v</sub> = 80 kPa.<br>Bước 1: C<sub>c</sub> / (1 + e<sub>0</sub>) = 0,9 / 2,8 ≈ 0,3214.<br>Bước 2: (30 + 80)/30 = 3,667; lg 3,667 ≈ 0,564.<br>Bước 3: S = 0,3214 × 6 × 0,564 ≈ <b>1,09 m</b>.<br>Với tải tương đương khoảng 4,4 m đất đắp (80/18) mà không phải đắp thật.</div>`],
+  ["Điểm cần lưu ý về ổn định",
+   `<p>Chân không không tạo ra ứng suất cắt như tải đắp nên ít gây trượt. Tuy nhiên nền bị kéo co vào phía tâm vùng xử lý, có thể gây nứt đất và lún ở vùng bên ngoài mép. Cần quan trắc chuyển vị ngang và khoảng cách đến công trình lân cận. Nếu có đắp thêm nền bên trên thì phần đắp vẫn cần kiểm toán trượt như thông thường.</p>`],
+  ["Chân không giảm theo độ sâu thế nào",
+   `<p>Về lý thuyết chân không truyền đều xuống theo chiều sâu bấc thấm. Thực tế áp suất giảm dần theo chiều sâu vì lực cản của bấc, rò khí và sự tắc nghẽn. Vì vậy khi tính toán phải xét hiệu suất, không dùng nguyên giá trị lý tưởng.</p>`]
+ ],
+ mist:["Dùng áp suất chân không lý tưởng cho toàn bộ chiều sâu mà không xét hao hụt.","Bỏ qua chuyển vị ngang và nứt đất ở vùng ngoài mép.","Không kiểm tra độ kín khí thường xuyên nên chân không giảm mà không phát hiện kịp."]
+},
+
+m5t2:{
+ deep:[
+  ["Thứ tự kiểm tra hệ thống kín khí",
+   `<ol class="steps"><li>Hào kín khí: bùn hoặc đất sét lấp đầy, không còn khe hở dưới mép màng.</li><li>Màng: không rách, các mối nối được hàn kín.</li><li>Các điểm xuyên màng (ống nối ra bơm): có phụ kiện bịt kín.</li><li>Chạy bơm thử, theo dõi áp suất dưới màng và trong ống thu.</li><li>Nếu áp suất không đạt, tìm điểm rò bằng cách chia vùng và kiểm tra từng khu.</li></ol>`],
+  ["Thiết bị quan trắc cơ bản",
+   `<p>Đồng hồ đo áp suất chân không dưới màng và trong bấc; thiết bị đo áp lực nước lỗ rỗng ở các độ sâu; mốc đo lún mặt và lún theo độ sâu; mốc đo chuyển vị ngang ở mép vùng xử lý. Dữ liệu từ các thiết bị này quyết định khi nào dừng bơm.</p>`]
+ ],
+ mist:["Chôn mép màng nông, không đủ độ sâu để bịt khí.","Bỏ qua lớp cát thấm ngang nên không có tường sét, chân không bị mất liên tục.","Chỉ theo dõi áp suất trên đồng hồ bơm mà không đo dưới màng."]
+},
+
+m6t1:{
+ deep:[
+  ["Mô men trượt trong trường hợp φ = 0 (sét yếu, ngắn hạn)",
+   `<p>Với đất sét bão hòa chịu tải nhanh (φ = 0), hệ số an toàn của cung tròn có thể tính trực tiếp bằng mô men quanh tâm O:</p>
+    <div class="formula"><div class="fx">F<sub>s</sub> = c<sub>u</sub> × L × R / (W × x)</div>
+    <div class="tr"><b>Trong đó:</b> c<sub>u</sub> là cường độ không thoát nước (kPa); L là chiều dài cung trượt (m); R là bán kính cung (m); W là trọng lượng khối đất trượt trên một mét dài (kN/m); x là cánh tay đòn từ trọng tâm khối trượt đến phương thẳng đứng qua tâm O (m). Tử số là mô men chống trượt, mẫu số là mô men gây trượt.</div></div>
+    <div class="example"><div class="eh">Ví dụ từng bước</div>c<sub>u</sub> = 20 kPa; cung trượt có góc ở tâm 90°, bán kính R = 10 m; W = 400 kN/m; x = 7 m.<br>Bước 1: L = π R × 90/180 = 3,1416 × 10 / 2 ≈ 15,71 m.<br>Bước 2: mô men chống = 20 × 15,71 × 10 ≈ 3 142 kN·m/m.<br>Bước 3: mô men gây trượt = 400 × 7 = 2 800 kN·m/m.<br>Bước 4: F<sub>s</sub> = 3 142 / 2 800 ≈ <b>1,12</b>. Thấp hơn mức yêu cầu thông thường nên cần giảm tải hoặc gia cường nền.</div>`],
+  ["Phương pháp lát cắt Bishop",
+   `<p>Với đất có cả c′ và φ′, nền thường tính bằng phương pháp lát cắt. Chia khối trượt thành các lát đứng bề rộng b; mỗi lát chịu trọng lượng W, áp lực nước lỗ rỗng u và nghiêng với góc α ở đáy. Công thức Bishop đơn giản:</p>
+    <div class="formula"><div class="fx">F<sub>s</sub> = Σ [ (c′ b + (W − u b) tan φ′) / m<sub>α</sub> ] / Σ (W sin α), &nbsp; m<sub>α</sub> = cos α × (1 + tan α tan φ′ / F<sub>s</sub>)</div>
+    <div class="tr"><b>Trong đó:</b> c′ và φ′ là lực dính và góc ma sát hữu hiệu; (W − u b) là phần lực thẳng đứng thực sự truyền qua hạt đất. Vì F<sub>s</sub> có mặt cả hai vế nên phần mềm giải bằng lặp. Bạn không cần tính tay, chỉ cần hiểu các đại lượng này để đọc đúng kết quả phần mềm.</div></div>`],
+  ["Hệ số an toàn cho phép",
+   `<p>Giá trị F<sub>s</sub> yêu cầu tùy cấp công trình, tổ hợp tải (đang thi công, lâu dài, có động đất) và tiêu chuẩn áp dụng. Với nền đắp trên đất yếu, giá trị thường nằm trong khoảng từ khoảng 1,2 đến 1,5 tùy trường hợp. Hãy dùng đúng con số trong tiêu chuẩn của dự án.</p>`]
+ ],
+ mist:["Chỉ chạy một lưới tâm trượt quá thưa nên bỏ sót mặt trượt nguy hiểm nhất.","Dùng thông số CU cho kiểm tra ổn định ngắn hạn ngay sau khi đắp.","Quên cập nhật áp lực nước lỗ rỗng khi mực nước hoặc tải thay đổi.","Chỉ kiểm tra giai đoạn cuối mà bỏ qua các giai đoạn đắp trung gian."]
+},
+
+m6t2:{
+ deep:[
+  ["Hai cách viết sức chống cắt",
+   `<p>Theo ứng suất tổng, sét bão hòa chịu cắt không thoát nước có sức chống cắt τ<sub>f</sub> = c<sub>u</sub> (φ<sub>u</sub> = 0). Theo ứng suất hữu hiệu: τ<sub>f</sub> = c′ + σ′ tan φ′, với σ′ = σ − u là ứng suất pháp hữu hiệu. Cách thứ nhất đơn giản và dùng cho ngắn hạn. Cách thứ hai cho phép thấy sức chống cắt tăng khi ứng suất hữu hiệu tăng (đất cố kết), phù hợp phân tích đắp theo giai đoạn nhưng cần biết áp lực nước lỗ rỗng.</p>`],
+  ["Chọn UU hay CU",
+   `<table><tr><th>Câu hỏi</th><th>UU</th><th>CU (có đo áp lực nước lỗ rỗng)</th></tr>
+    <tr><td>Mẫu có được cố kết trước không?</td><td>Không</td><td>Có, dưới áp lực buồng</td></tr>
+    <tr><td>Cho ra thông số gì?</td><td>c<sub>u</sub>, φ<sub>u</sub> ≈ 0</td><td>c<sub>cu</sub>, φ<sub>cu</sub> hoặc c′, φ′</td></tr>
+    <tr><td>Phù hợp bài toán</td><td>Vừa đắp xong, ổn định ngắn hạn</td><td>Đã cố kết một phần, đắp giai đoạn, ổn định lâu dài</td></tr>
+    <tr><td>Hạn chế</td><td>Mẫu bị xáo trộn dễ cho giá trị thấp</td><td>Cần thời gian thí nghiệm lâu hơn</td></tr></table>`]
+ ],
+ mist:["Dùng c, φ của CU cho bài toán không thoát nước ngắn hạn.","Dùng kết quả UU của mẫu bị xáo trộn nên cường độ thấp hơn thực tế.","Dùng cả hai bộ thông số trong cùng một mô hình mà không phân biệt giai đoạn."]
+},
+
+m6t3:{
+ deep:[
+  ["Ví dụ tính S<sub>u</sub> từng bước",
+   `<div class="example"><div class="eh">Ví dụ</div>Cánh D = 65 mm = 0,065 m; H = 130 mm = 0,13 m; mô men xoắn lớn nhất T = 12,5 N·m = 0,0125 kN·m.<br>Bước 1: π D² = 3,1416 × 0,065² ≈ 0,01327 m².<br>Bước 2: H + D/3 = 0,13 + 0,0217 = 0,1517 m.<br>Bước 3: mẫu số = 0,01327 × 0,1517 ≈ 0,002013 m³.<br>Bước 4: S<sub>u</sub> = 2 × 0,0125 / 0,002013 ≈ <b>12,4 kPa</b>.</div>`],
+  ["Hiệu chỉnh trước khi thiết kế",
+   `<p>S<sub>u</sub> đo bằng cắt cánh thường lớn hơn cường độ mà nền thực tế phát huy khi trượt, nhất là với sét dẻo cao. Một cách hiệu chỉnh thường dùng là hệ số Bjerrum: S<sub>u,tk</sub> = μ × S<sub>u,cánh</sub>, với μ = 1,7 − 0,54 lg(I<sub>P</sub>), I<sub>P</sub> là chỉ số dẻo (%). Ví dụ I<sub>P</sub> = 50 thì lg 50 = 1,699, μ = 1,7 − 0,54 × 1,699 ≈ 0,78; với S<sub>u,cánh</sub> = 30 kPa thì S<sub>u,tk</sub> ≈ 23,5 kPa.</p>`],
+  ["Độ nhạy",
+   `<p>Sau khi đo cường độ đỉnh, xoay nhanh nhiều vòng để phá hủy cấu trúc đất rồi đo cường độ dư S<sub>u,r</sub> (đất đã bị xáo trộn). Độ nhạy S<sub>t</sub> = S<sub>u</sub> / S<sub>u,r</sub>. Độ nhạy cao cho biết đất rất dễ mất cường độ khi bị xáo trộn (do thi công, đóng cọc, rung), cần thận trọng khi thiết kế.</p>`]
+ ],
+ mist:["Thí nghiệm trong lớp có lẫn cát, vỏ sò hoặc rễ cây nên số đo bị cao hơn thực tế.","Xoay quá nhanh hoặc quá chậm so với tốc độ chuẩn.","Ấn cánh vào đất rồi xoay ngay không chờ đất ổn định.","Dùng thẳng S<sub>u</sub> cắt cánh mà không hiệu chỉnh cho sét có độ dẻo cao."]
+},
+
+m6t4:{
+ deep:[
+  ["Cường độ tăng theo ứng suất hữu hiệu",
+   `<p>Đất sét cố kết thường có cường độ không thoát nước tăng theo ứng suất hữu hiệu thẳng đứng: S<sub>u</sub> = (S<sub>u</sub>/σ′<sub>v</sub>) × σ′<sub>v</sub>. Tỷ số S<sub>u</sub>/σ′<sub>v</sub> khoảng 0,2 đến 0,35 với nhiều loại sét. Một tương quan hay dùng của Skempton là S<sub>u</sub>/σ′<sub>v</sub> ≈ 0,11 + 0,0037 I<sub>P</sub>. Ví dụ I<sub>P</sub> = 40 cho tỷ số 0,11 + 0,148 = 0,258; với σ′<sub>v</sub> = 50 kPa thì S<sub>u</sub> ≈ 12,9 kPa. Mô hình này phù hợp khi tính ổn định từng giai đoạn đắp vì cường độ tăng dần khi đất cố kết.</p>`],
+  ["Cách chọn mô hình",
+   `<ol class="steps"><li>Nền đắp, đá, cát: dùng Mohr-Coulomb với c′, φ′ hoặc c, φ phù hợp.</li><li>Sét yếu, tính ngắn hạn, có đủ số liệu c<sub>u</sub>: dùng mô hình không thoát nước (φ = 0).</li><li>Cường độ tăng theo độ sâu: dùng hàm cường độ theo độ sâu.</li><li>Đắp theo giai đoạn và có số liệu cố kết: dùng mô hình cường độ theo ứng suất hữu hiệu.</li></ol>
+    <p>Tên mô hình thay đổi giữa các phiên bản phần mềm nên hãy xem phần Help của phiên bản đang dùng.</p>`]
+ ],
+ mist:["Dùng mô hình φ = 0 cho đất đã cố kết nhiều và tính lâu dài.","Gán một giá trị c<sub>u</sub> cho cả lớp sét dày trong khi cường độ tăng theo độ sâu.","Không kiểm tra mô hình bằng cách so với nền đã trượt hoặc đã đo ngoài hiện trường."]
+},
+
+m7t1:{
+ deep:[
+  ["Dùng thống kê đơn giản để đánh giá độ phân tán",
+   `<p>Với n mẫu của cùng một lớp đất, tính giá trị trung bình x̄ và độ lệch chuẩn σ; hệ số biến thiên là v = σ / x̄ (không có đơn vị). Hệ số biến thiên càng lớn, số liệu càng phân tán và càng cần thận trọng. Ví dụ c<sub>u</sub> trung bình 20 kPa, σ = 6 kPa thì v = 0,3, tức là lớp đó không đồng nhất; nên xem xét chia lớp nhỏ hơn hoặc dùng giá trị bất lợi hơn trung bình.</p>`],
+  ["Bảng kiểm tra độ tin cậy của một lớp số liệu",
+   `<table><tr><th>Câu hỏi</th><th>Nếu trả lời “không”</th></tr>
+    <tr><td>Mẫu nguyên dạng và được bảo quản đúng?</td><td>Cường độ và C<sub>c</sub> thường thấp hơn thực tế</td></tr>
+    <tr><td>Các chỉ tiêu ăn khớp nhau (e<sub>0</sub>, W, γ, S<sub>r</sub>)?</td><td>Có sai sót nhập số liệu hoặc đo</td></tr>
+    <tr><td>Kết quả phòng thí nghiệm khớp với hiện trường (SPT, cắt cánh)?</td><td>Cần xem lại, có thể cần khoan bổ sung</td></tr>
+    <tr><td>Số mẫu đủ để lấy giá trị đại diện?</td><td>Dùng giá trị thận trọng, đề xuất bổ sung thí nghiệm</td></tr></table>`]
+ ],
+ mist:["Tin hoàn toàn một mẫu có kết quả đẹp mà bỏ qua các mẫu khác trong cùng lớp.","Trộn số liệu của các lớp khác nhau để tính trung bình.","Không đối chiếu số liệu phòng thí nghiệm với hiện trường."]
+},
+
+m7t2:{
+ deep:[
+  ["Một số tương quan kinh nghiệm hay dùng (chỉ để kiểm tra chéo)",
+   `<table><tr><th>Đại lượng</th><th>Tương quan thô</th><th>Giải thích</th></tr>
+    <tr><td>C<sub>c</sub></td><td>≈ 0,009 (W<sub>L</sub> − 10)</td><td>W<sub>L</sub> là giới hạn chảy (%); cho sét cố kết thường</td></tr>
+    <tr><td>C<sub>s</sub></td><td>≈ C<sub>c</sub>/5 đến C<sub>c</sub>/10</td><td>Chỉ số nở thường nhỏ hơn nhiều so với chỉ số nén</td></tr>
+    <tr><td>C<sub>α</sub> (nén thứ cấp)</td><td>≈ 0,04 C<sub>c</sub> cho nhiều sét vô cơ</td><td>Đất hữu cơ có tỷ số lớn hơn</td></tr>
+    <tr><td>c<sub>h</sub></td><td>≈ (1 đến 3) × C<sub>v</sub></td><td>Phụ thuộc tính phân lớp và cấu trúc đất</td></tr>
+    <tr><td>S<sub>u</sub>/σ′<sub>v</sub></td><td>≈ 0,11 + 0,0037 I<sub>P</sub></td><td>I<sub>P</sub> là chỉ số dẻo (%)</td></tr></table>
+    <p>Các tương quan này có sai số lớn và phụ thuộc vùng đất. Hãy dùng chúng để phát hiện số liệu bất thường rồi xác nhận lại bằng thí nghiệm, không dùng thay thế thí nghiệm.</p>`],
+  ["Ví dụ dùng tương quan để phát hiện số liệu lạ",
+   `<p>Sét có W<sub>L</sub> = 60% cho C<sub>c</sub> ≈ 0,009 × 50 = 0,45. Nếu thí nghiệm báo C<sub>c</sub> = 0,9 (gấp đôi) và các chỉ tiêu khác bình thường thì cần xem lại: mẫu có hữu cơ, mẫu bị xáo trộn, hay nhập nhầm số liệu. Ngược lại nếu đất rất hữu cơ thì C<sub>c</sub> cao hơn tương quan là điều có thể xảy ra.</p>`]
+ ],
+ mist:["Dùng tương quan cho loại đất ngoài phạm vi áp dụng của nó (đất hữu cơ, than bùn).","Lấy giá trị tương quan thay cho số liệu thí nghiệm trong hồ sơ thiết kế chính thức.","Áp dụng một hệ số nhân chung cho mọi khu vực mà không xem xét điều kiện địa chất tại chỗ."]
+},
+
+m7t3:{
+ deep:[
+  ["Ví dụ minh họa bảng phân đoạn (số liệu giả định)",
+   `<div class="tblwrap"><table><tr><th>Đoạn</th><th>Lý trình</th><th>Lớp yếu dày (m)</th><th>Cao đắp (m)</th><th>Hướng xử lý (ví dụ)</th></tr>
+    <tr><td>1</td><td>Km0+000 - Km0+300</td><td>&lt; 2</td><td>2,0</td><td>Đào thay hoặc không xử lý</td></tr>
+    <tr><td>2</td><td>Km0+300 - Km1+000</td><td>8 - 12</td><td>3,5</td><td>Bấc thấm và gia tải</td></tr>
+    <tr><td>3</td><td>Km1+000 - Km1+200</td><td>12 - 20</td><td>5,0</td><td>Xem xét bấc thấm dày hơn, đắp giai đoạn hoặc cọc xi măng đất</td></tr></table></div>
+    <p>Bảng này chỉ minh họa cách trình bày, không phải số liệu của một dự án thật.</p>`],
+  ["Nguyên tắc phân đoạn",
+   `<ul class="plain"><li>Phân đoạn theo hai biến chính: chiều dày lớp yếu và chiều cao đắp. Lún tăng khi cả hai đều tăng.</li><li>Mỗi đoạn dùng một mặt cắt tính đại diện với điều kiện bất lợi nhất trong đoạn.</li><li>Làm tròn ranh giới đoạn theo cọc km hoặc cọc 100 m để dễ thi công và nghiệm thu.</li><li>Giữa hai đoạn xử lý khác nhau nên có đoạn chuyển tiếp dần để tránh chênh lún đột ngột.</li></ul>`]
+ ],
+ mist:["Phân đoạn quá nhiều làm hồ sơ và thi công rối.","Phân đoạn quá thô, một mặt cắt đại diện cho đoạn dài có đất yếu thay đổi nhiều.","Quên đoạn chuyển tiếp giữa hai phương án xử lý."]
+},
+
+m7t4:{
+ deep:[
+  ["Đặc điểm của đường đô thị",
+   `<ul class="plain"><li>Tiến độ thường ngắn, khó chờ nhiều tháng cho nền cố kết.</li><li>Có nhà dân, hạ tầng ngầm hai bên: cần hạn chế rung, lún lan và chuyển vị ngang.</li><li>Mặt đường chịu yêu cầu cao về lún dư để không hư hỏng các công trình tiện ích.</li><li>Mặt bằng hạn chế, khó đắp gia tải cao.</li></ul>`],
+  ["Chọn lỗ khoan để kiểm toán",
+   `<p>Trong mỗi đoạn, chọn lỗ khoan có điều kiện bất lợi nhất: lớp yếu dày nhất, chỉ tiêu cơ lý kém nhất, chiều cao đắp lớn nhất. Khi các lỗ khoan cách nhau xa so với mức thay đổi của địa chất, cần đề xuất khoan bổ sung để xác nhận. Với đoạn đi qua cống, nút giao hoặc đầu cầu, nên chọn thêm lỗ khoan gần các vị trí đó.</p>`]
+ ],
+ mist:["Chọn lỗ khoan “đẹp” để tính cho cả đoạn.","Dùng biện pháp gây rung lớn (đóng cọc, đầm nặng) sát nhà dân.","Chọn biện pháp cần thời gian chờ dài trong khi tiến độ đô thị không cho phép."]
+},
+
+m7t5:{
+ deep:[
+  ["Độ dốc chênh lún",
+   `<p>Độ dốc chênh lún là tỷ số giữa chênh lệch lún ΔS giữa hai điểm và khoảng cách L giữa hai điểm đó: i = ΔS / L. Ví dụ mố cầu gần như không lún, điểm cách mố 30 m lún thêm 0,15 m thì i = 0,15 / 30 = 0,005 = 0,5%. Quyết định 3095 của Bộ GTVT quy định giới hạn cho độ dốc này. Bài này không nêu con số để tránh sai; hãy lấy từ văn bản gốc và bảng tính kèm theo.</p>`],
+  ["Các cách giảm chênh lún",
+   `<ul class="plain"><li>Tăng cường xử lý nền sau mố (bấc thấm dày hơn, cọc xi măng đất hoặc đệm nhẹ).</li><li>Kéo dài thời gian chờ lún trước khi thi công bản quá độ và mặt đường.</li><li>Dùng vật liệu đắp nhẹ ở đoạn gần mố để giảm tải.</li><li>Kéo dài đoạn chuyển tiếp để chênh lún phân bố trên chiều dài lớn hơn.</li></ul>`]
+ ],
+ mist:["Chỉ tính lún tổng mà không tính chênh lệch lún giữa mố và nền.","Làm bản quá độ nhưng vẫn để nền sau mố lún dư lớn.","Quên rằng lún của nền cống hộp khác lún của nền đắp bên cạnh."]
+}
+};
+
 /* ============ TRẠNG THÁI ============ */
 let state = {done:{}, notes:{}, open:{}};
 const KEY = "nenYeuApp_v1";
@@ -541,25 +1198,28 @@ try{ const s = localStorage.getItem(KEY); if(s) state = Object.assign(state, JSO
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
 
 const ALL = [];
-MODULES.forEach((m,mi)=>m.topics.forEach((t,ti)=>ALL.push({m,mi,t,ti})));
+MODULES.forEach((m,mi)=>m.topics.forEach((t,ti)=>{
+  const x = EXTRA[t.id]; if(x){ t.deep = x.deep; t.mist = x.mist; }
+  ALL.push({m,mi,t,ti});
+}));
 const $ = s=>document.querySelector(s);
 const plain = h => h.replace(/<[^>]+>/g,"").replace(/&lt;/g,"<").replace(/&gt;/g,">").toLowerCase();
+const mcOf = mi => `style="--mc:var(--m${mi+1})"`;
+const modName = m => m.title.replace(/^Module \d+ - /,"");
 
 /* ============ MỤC LỤC ============ */
 function renderTree(){
   const q = plain($("#q").value||"").trim();
   const host = $("#tree"); host.innerHTML="";
-  MODULES.forEach(m=>{
-    const topics = m.topics.filter(t=>{
-      if(!q) return true;
-      return plain(JSON.stringify(t)).includes(q) || plain(m.title).includes(q);
-    });
+  MODULES.forEach((m,mi)=>{
+    const topics = m.topics.filter(t=> !q || plain(JSON.stringify(t)).includes(q) || plain(m.title).includes(q));
     if(!topics.length) return;
     const doneN = m.topics.filter(t=>state.done[t.id]).length;
     const div = document.createElement("div");
     div.className = "mod" + ((state.open[m.id]||q)?" open":"");
+    div.setAttribute("style",`--mc:var(--m${mi+1})`);
     const btn = document.createElement("button"); btn.className="mh";
-    btn.innerHTML = `<span>${m.title}</span><span class="count">${doneN}/${m.topics.length}</span>`;
+    btn.innerHTML = `<span class="no">${mi+1}</span><span class="tt">${modName(m)}</span><span class="count">${doneN}/${m.topics.length}</span>`;
     btn.onclick = ()=>{ state.open[m.id] = !div.classList.contains("open"); save(); renderTree(); };
     div.appendChild(btn);
     const ul = document.createElement("ul");
@@ -578,25 +1238,31 @@ function renderTree(){
   $("#progBar").style.width = (d/total*100)+"%";
 }
 
-/* ============ NỘI DUNG BÀI ============ */
+/* ============ TRANG BÀI ============ */
 let currentId = null;
+const sec = (title, body)=> `<section class="sec"><h3>${title}</h3>${body}</section>`;
 function tableHtml(tb){
-  return `<table><tr>${tb.head.map(h=>`<th>${h}</th>`).join("")}</tr>${tb.rows.map(r=>`<tr>${r.map((c,i)=>`<td${i==0?' class="k"':''}>${c}</td>`).join("")}</tr>`).join("")}</table>`;
+  return `<div class="tblwrap"><table><tr>${tb.head.map(h=>`<th>${h}</th>`).join("")}</tr>${tb.rows.map(r=>`<tr>${r.map((c,i)=>`<td${i==0?' class="k"':''}>${c}</td>`).join("")}</tr>`).join("")}</table></div>`;
 }
 function renderTopic(id){
   const idx = ALL.findIndex(x=>x.t.id===id); if(idx<0) return renderHome();
-  const {m,t} = ALL[idx]; currentId = id;
-  let h = `<div class="card"><span class="tag">${m.title}</span><h2>${t.title}</h2><p>${t.summary}</p></div>`;
-  if(t.concepts) h += `<div class="card"><h3>Khái niệm và ký hiệu cần biết</h3><table>${t.concepts.map(c=>`<tr><td class="k">${c[0]}</td><td>${c[1]}</td></tr>`).join("")}</table></div>`;
-  if(t.formulas) h += `<div class="card"><h3>Công thức</h3>${t.formulas.map(f=>`<div class="formula"><div class="fn">${f.name}</div><div class="fx">${f.f}</div><div><b>Trong đó:</b></div><table>${f.symbols.map(s=>`<tr><td class="k">${s[0]}</td><td>${s[1]}</td></tr>`).join("")}</table>${f.cond?`<div><b>Điều kiện áp dụng và nhận xét:</b> ${f.cond}</div>`:""}</div>`).join("")}</div>`;
-  if(t.table) h += `<div class="card">${tableHtml(t.table)}</div>`;
-  if(t.example) h += `<div class="card"><h3>${t.example.title}</h3><div class="example">${t.example.html}</div></div>`;
-  if(t.steps) h += `<div class="card"><h3>Các bước thực hiện</h3><ol>${t.steps.map(s=>`<li>${s}</li>`).join("")}</ol></div>`;
-  if(t.notes) h += `<div class="card"><h3>Lưu ý</h3>${t.notes.map(n=>`<div class="note">${n}</div>`).join("")}</div>`;
-  if(t.quiz) h += `<div class="card"><h3>Tự kiểm tra</h3>${t.quiz.map(q=>`<details><summary>${q[0]}</summary><p>${q[1]}</p></details>`).join("")}</div>`;
-  h += `<div class="card"><h3>Ghi chú của tôi</h3><textarea class="nt" id="note" placeholder="Ghi lại điều bạn hiểu, câu hỏi, số liệu dự án..."></textarea>
-  <div class="row"><label><input type="checkbox" id="doneCk"> Đã học xong bài này</label></div></div>`;
-  h += `<div class="nav2"><button class="btn ghost" id="prev" ${idx==0?"disabled":""}>← Bài trước</button><button class="btn" id="next" ${idx==ALL.length-1?"disabled":""}>Bài sau →</button></div>`;
+  const {m,mi,t,ti} = ALL[idx]; currentId = id;
+  let h = `<div ${mcOf(mi)}>`;
+  h += `<div class="crumb"><b>Module ${mi+1}</b> · ${modName(m)} · Bài ${ti+1}/${m.topics.length}</div>`;
+  h += `<div class="titleblock"><h2>${t.title}</h2><p class="lead"><b>Ý chính:</b> ${t.summary}</p></div>`;
+  if(DIAG[id]){ h += sec("Hình minh họa", DIAG[id]().map(f=>`<figure class="fig">${f.svg}<figcaption>${f.cap}</figcaption></figure>`).join("")); }
+  if(t.concepts) h += sec("Khái niệm và ký hiệu cần biết", `<div class="tblwrap"><table>${t.concepts.map(c=>`<tr><td class="k">${c[0]}</td><td>${c[1]}</td></tr>`).join("")}</table></div>`);
+  if(t.formulas) h += sec("Công thức", t.formulas.map(f=>`<div class="formula"><div class="fn">${f.name}</div><div class="fx">${f.f}</div><div class="tr"><b>Trong đó:</b></div><div class="tblwrap"><table>${f.symbols.map(s=>`<tr><td class="k">${s[0]}</td><td>${s[1]}</td></tr>`).join("")}</table></div>${f.cond?`<div class="tr"><b>Điều kiện áp dụng và nhận xét:</b> ${f.cond}</div>`:""}</div>`).join(""));
+  if(t.table) h += sec("Bảng tổng hợp", tableHtml(t.table));
+  if(t.example) h += sec(t.example.title, `<div class="example">${t.example.html}</div>`);
+  if(t.steps) h += sec("Các bước thực hiện", `<ol class="steps">${t.steps.map(s=>`<li>${s}</li>`).join("")}</ol>`);
+  if(t.deep) h += sec("Hiểu sâu hơn", t.deep.map(d=>`<h4>${d[0]}</h4>${d[1]}`).join(""));
+  if(t.mist) h += sec("Sai lầm thường gặp", t.mist.map(x=>`<div class="callout mist">${x}</div>`).join(""));
+  if(t.notes) h += sec("Lưu ý", t.notes.map(n=>`<div class="callout note"><span class="lb">Cần đối chiếu</span>${n}</div>`).join(""));
+  if(t.quiz) h += sec("Tự kiểm tra", t.quiz.map(q=>`<details><summary>${q[0]}</summary><p>${q[1]}</p></details>`).join(""));
+  h += sec("Ghi chú của tôi", `<textarea class="nt" id="note" placeholder="Ghi lại điều bạn hiểu, câu hỏi, số liệu dự án..."></textarea>
+    <div class="row"><label><input type="checkbox" id="doneCk"> Đã học xong bài này</label></div>`);
+  h += `<div class="nav2"><button class="btn ghost" id="prev" ${idx==0?"disabled":""}>← Bài trước</button><button class="btn" id="next" ${idx==ALL.length-1?"disabled":""}>Bài sau →</button></div></div>`;
   $("#main").innerHTML = h;
   const nt = $("#note"); nt.value = state.notes[id]||"";
   nt.oninput = ()=>{ state.notes[id] = nt.value; save(); };
@@ -606,18 +1272,25 @@ function renderTopic(id){
   $("#next").onclick = ()=>go(ALL[idx+1].t.id);
   state.open[m.id]=true; renderTree(); window.scrollTo(0,0);
 }
+
+/* ============ TRANG CHỦ ============ */
 function renderHome(){
   currentId = null;
-  let h = `<div class="card home"><h2>Sổ tay nghiên cứu: Xử lý nền đất yếu</h2>
-  <p>Ứng dụng này sắp xếp nội dung khóa học theo 7 module. Mỗi bài có giải thích cho người mới: ký hiệu, công thức, ví dụ tính từng bước, lưu ý và câu hỏi tự kiểm tra. Bạn có thể ghi chú và đánh dấu tiến độ, dữ liệu lưu ngay trên thiết bị này.</p>
-  <div class="note">Phần giải thích do người soạn bổ sung từ kiến thức chung về địa kỹ thuật, theo khung đề cương khóa học. Các con số cụ thể, giới hạn và điều khoản của tiêu chuẩn cần đối chiếu với tài liệu và bảng tính của khóa học cùng văn bản tiêu chuẩn gốc.</div></div>`;
-  MODULES.forEach(m=>{
+  const total = ALL.length, d = ALL.filter(x=>state.done[x.t.id]).length;
+  const nextT = ALL.find(x=>!state.done[x.t.id]) || ALL[0];
+  let h = `<div class="hero"><h2>Xử lý nền đất yếu</h2>
+    <p>Sổ tay kỹ thuật theo khung khóa học 7 module: từ tính lún, bấc thấm, cọc xi măng đất, hút chân không đến kiểm toán trượt. Mỗi bài có sơ đồ, công thức giải thích từng ký hiệu, ví dụ tính từng bước, phần hiểu sâu hơn và các sai lầm thường gặp.</p>
+    <div class="stats"><div class="stat"><b>${MODULES.length}</b><span>module</span></div><div class="stat"><b>${total}</b><span>bài học</span></div><div class="stat"><b>${d}</b><span>bài đã học</span></div></div>
+    <button class="btn" id="goNext">${d?"Học tiếp: ":"Bắt đầu: "}${plain(nextT.t.title).slice(0,48)}${plain(nextT.t.title).length>48?"...":""}</button></div>`;
+  h += `<p class="disc">Phần giải thích do người soạn bổ sung từ kiến thức chung về địa kỹ thuật, theo khung đề cương của khóa học. Các con số cụ thể, giới hạn và điều khoản tiêu chuẩn cần đối chiếu với bài giảng, bảng tính của khóa học và văn bản tiêu chuẩn gốc.</p><div class="grid">`;
+  MODULES.forEach((m,mi)=>{
     const dn = m.topics.filter(t=>state.done[t.id]).length;
-    h += `<div class="card modcard" data-first="${m.topics[0].id}"><h3>${m.title}</h3><p>${m.intro}</p><div class="small-muted">${m.topics.length} bài, đã học ${dn}</div></div>`;
+    h += `<div class="mcard" ${mcOf(mi)} data-first="${m.topics[0].id}"><span class="big">Module ${mi+1}</span><h3>${modName(m)}</h3><p>${m.intro}</p><div class="meta">${m.topics.length} bài · đã học ${dn}</div><div class="bar"><i style="width:${dn/m.topics.length*100}%"></i></div></div>`;
   });
-  h += `<div class="card"><h3>Ghi chú và sao lưu</h3><div class="row"><button class="btn small" id="expBtn">Tải toàn bộ ghi chú (.txt)</button><button class="btn ghost small" id="rstBtn">Xóa tiến độ và ghi chú</button></div></div>`;
+  h += `</div><section class="sec" style="--mc:var(--m7)"><h3>Ghi chú và sao lưu</h3><p class="small-muted">Ghi chú và tiến độ lưu ngay trên trình duyệt của thiết bị này. Nên tải ghi chú ra file để sao lưu.</p><div class="row"><button class="btn small" id="expBtn">Tải toàn bộ ghi chú (.txt)</button><button class="btn ghost small" id="rstBtn">Xóa tiến độ và ghi chú</button></div></section>`;
   $("#main").innerHTML = h;
-  document.querySelectorAll(".modcard").forEach(c=>c.onclick=()=>go(c.dataset.first));
+  document.querySelectorAll(".mcard").forEach(c=>c.onclick=()=>go(c.dataset.first));
+  $("#goNext").onclick = ()=>go(nextT.t.id);
   $("#expBtn").onclick = exportNotes;
   $("#rstBtn").onclick = ()=>{ if(confirm("Xóa toàn bộ tiến độ và ghi chú trên thiết bị này?")){ state={done:{},notes:{},open:{}}; save(); renderTree(); renderHome(); } };
   renderTree(); window.scrollTo(0,0);
