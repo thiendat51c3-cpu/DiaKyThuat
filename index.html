@@ -202,7 +202,8 @@ svg.dg{width:100%;height:auto;display:block}
 .dg .gridl{stroke:var(--line);stroke-width:1}
 .dg .hlw{paint-order:stroke;stroke:var(--surface2);stroke-width:3px;stroke-linejoin:round}
 nav#side,.tblwrap,figure.fig,textarea{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
-body.noscroll{overflow:hidden;position:fixed;left:0;right:0;width:100%}
+html.noscroll,body.noscroll{overflow:hidden;overscroll-behavior:none}
+@media (max-width:860px){nav#side{height:100vh;height:100dvh;bottom:auto;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:120px}#scrim{touch-action:none}}
 </style>
 </head>
 <body>
@@ -2320,8 +2321,7 @@ function route(){
   hs ? renderTopic(hs) : renderHome();
 }
 window.addEventListener("hashchange", route);
-let _sy=0;
-function lockBody(on){ if(on){ _sy=window.scrollY; document.body.style.top=(-_sy)+"px"; document.body.classList.add("noscroll"); } else if(document.body.classList.contains("noscroll")){ document.body.classList.remove("noscroll"); document.body.style.top=""; window.scrollTo(0,_sy); } }
+function lockBody(on){ document.documentElement.classList.toggle("noscroll",on); document.body.classList.toggle("noscroll",on); }
 function closeMenu(){ $("#side").classList.remove("show"); $("#scrim").classList.remove("show"); lockBody(false); }
 $("#menuBtn").onclick = ()=>{ $("#side").classList.add("show"); $("#scrim").classList.add("show"); lockBody(true); };
 $("#scrim").onclick = closeMenu;
